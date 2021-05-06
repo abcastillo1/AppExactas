@@ -583,13 +583,12 @@
                     android:id="@+id/campo_otros1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:hint="Detallar"
                     android:textSize="17dp"
-                    android:inputType="textMultiLine"
-                    android:lines="3"
-                    android:maxLines="3"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="15dp"
+                    android:padding="5dp"
                     android:background="#DCDADA"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gris"
@@ -758,20 +757,82 @@
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
+                    <CheckBox
+                        android:id="@+id/check_diarrea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:checked="false"
+                        android:text="Diarrea"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
+                        android:theme="@style/MyCheckBox" />
+
+                    <CheckBox
+                        android:id="@+id/check_gastroenteritis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Gastroenteritis"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
+                        android:theme="@style/MyCheckBox" />
+                    <CheckBox
+                        android:id="@+id/check_amebiasis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:checked="false"
+                        android:text="Amebiasis"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
+                        android:theme="@style/MyCheckBox" />
+
+                    <CheckBox
+                        android:id="@+id/check_echericha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Echericha coli"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
+                        android:theme="@style/MyCheckBox" />
+
+                    <CheckBox
+                        android:id="@+id/check_colera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Cólera"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
+                        android:theme="@style/MyCheckBox" />
+
+                    <CheckBox
+                        android:id="@+id/check_otras"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Otras"
+                        android:textSize="17dp"
+                        android:textColor="@color/black"
+                        android:theme="@style/MyCheckBox" />
+
                     <EditText
-                        android:id="@+id/texto_diagnostico"
+                        android:id="@+id/texto_otros"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/texto_info10"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="15dp"
                         android:hint="Detallar"
                         android:textSize="17dp"
-                        android:inputType="textPersonName|textCapWords"
+                        android:layout_below="@+id/check_otras"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="15dp"
                         android:padding="5dp"
+                        android:background="#DCDADA"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/gris"/>
+                        android:textColorHint="@color/gris"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -830,6 +891,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textPregunta14"
+
                 android:orientation="vertical"
                 android:padding="25dp"
                 android:visibility="gone">
