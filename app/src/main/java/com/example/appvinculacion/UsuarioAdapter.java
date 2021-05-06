@@ -9,7 +9,7 @@ import android.widget.Toast;
 public class UsuarioAdapter {
 
     //nombre de la base de datos
-    private final String DB_NAME = "PROYECTO_AP";
+    private final String DB_NAME = "PROYECTO_EXACTAS";
     //version de la base de datos
     private final int DB_VERSION = 1;
     //nombre de la tabla
