@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void saveNameToServer() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Saving Name...");
+        progressDialog.setMessage("Guardando en el servidor...");
         progressDialog.show();
 
         final String codigo = editTextCode.getText().toString().trim();

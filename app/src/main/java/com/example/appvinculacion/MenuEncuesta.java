@@ -33,7 +33,7 @@ public class MenuEncuesta extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.encuesta1: i=new Intent(this,MiEncuesta.class);startActivity(i);break;
-            case R.id.encuesta2: Toast.makeText(MenuEncuesta.this, "No está disponible", Toast.LENGTH_LONG).show();;break;
+            case R.id.encuesta2:  i=new Intent(this,MiEncuesta2.class);startActivity(i);break;
 
             default:break;
         }

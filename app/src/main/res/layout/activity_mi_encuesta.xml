@@ -1197,21 +1197,72 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/capacidad_cisterna"
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:id="@+id/check_1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/texto_info16"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="15dp"
-                    android:hint="Número"
-                    android:inputType="textPersonName|textCapWords"
-                    android:padding="5dp"
-                    android:background="#DCDADA"
+                    android:checked="false"
+                    android:text="1"
+                    android:textSize="17dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/gris"
-                    android:textSize="17dp" />
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="2"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="3"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="4"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+                <CheckBox
+                    android:id="@+id/check_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="5"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+                <CheckBox
+                    android:id="@+id/check_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="6"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+                <CheckBox
+                    android:id="@+id/check_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="7"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
 
 
             </LinearLayout>
@@ -1238,21 +1289,74 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/capacidad_tanque"
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:id="@+id/check_250"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/texto_info17"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="15dp"
-                    android:hint="Número"
-                    android:inputType="textPersonName|textCapWords"
-                    android:padding="5dp"
-                    android:background="#DCDADA"
+                    android:checked="false"
+                    android:text="250"
+                    android:textSize="17dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/gris"
-                    android:textSize="17dp" />
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="500"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_600"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="600"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_1000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="1000"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+                <CheckBox
+                    android:id="@+id/check_1100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="1100"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+                <CheckBox
+                    android:id="@+id/check_2000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="2000"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+                <CheckBox
+                    android:id="@+id/check_2500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="2500"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+
 
 
             </LinearLayout>
@@ -1366,9 +1470,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textPregunta24"
                 android:layout_marginBottom="8dp"
-                android:paddingLeft="25dp"
-                android:paddingTop="25dp"
-                android:paddingRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
                 android:text="INDICAR SI REALIZA CLORACIÓN AL AGUA DE ESTOS ALMACENAMIENTOS"
                 android:textSize="18dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -1383,25 +1487,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/texto_info11"
-                android:paddingLeft="25dp"
-                android:paddingTop="25dp"
-                android:paddingRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
                 android:visibility="gone"
                 android:orientation="vertical">
 
                 <CheckBox
                     android:id="@+id/check_si4"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="40dp"
                     android:checked="false"
                     android:text="Si"
                     android:textSize="17dp"
-
                     android:theme="@style/MyCheckBox"
-                    android:background="#E64187FF"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/black"/>
 
                 <CheckBox
                     android:id="@+id/check_no4"
@@ -1435,13 +1536,103 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
+                <CheckBox
+                    android:id="@+id/check_semanal1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Semanal"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_quincenal1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Quincenal "
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_mensual1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Mensual "
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_bimensual1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Bimensual"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_trimestral1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Trimestral"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_cuatrimestral1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Cuatrimestral"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_semestral1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Semestral"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_anual1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Anual"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_otras1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Otro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
                 <EditText
-                    android:id="@+id/frecuencia"
+                    android:id="@+id/texto_otros1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/texto_info20"
+                    android:layout_below="@+id/check_otras1"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="15dp"
                     android:hint="Detallar"
                     android:textSize="17dp"
@@ -1449,7 +1640,8 @@
                     android:padding="5dp"
                     android:background="#DCDADA"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/gris" />
+                    android:textColorHint="@color/gris"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -1474,13 +1666,103 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
+                 <CheckBox
+                    android:id="@+id/check_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="1 - 3 gotas por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="3 - 6 gotas por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="6 - 10 gotas por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="10 - 1000 gotas por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="1000 gotas - 1/4 taza por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="1/4 - 1/2 taza por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="1/2 - 3/4 taza por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_op8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="3/4 a 1 taza por litro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
+                <CheckBox
+                    android:id="@+id/check_otras2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Otro"
+                    android:textSize="17dp"
+                    android:textColor="@color/black"
+                    android:theme="@style/MyCheckBox" />
+
                 <EditText
-                    android:id="@+id/dosificacion"
+                    android:id="@+id/texto_otros2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/texto_info21"
+                    android:layout_below="@+id/check_otras1"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="15dp"
                     android:hint="Detallar"
                     android:textSize="17dp"
@@ -1488,7 +1770,8 @@
                     android:padding="5dp"
                     android:background="#DCDADA"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/gris"/>
+                    android:textColorHint="@color/gris"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -1518,7 +1801,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="17dp"
                     android:checked="false"
-                    android:text="Llave"
+                    android:text="Directo de la Llave"
                     android:textColor="@color/black"
                     android:theme="@style/MyCheckBox" />
 
@@ -1836,6 +2119,7 @@
                     android:hint="Detallar"
                     android:inputType="textPersonName|textCapWords"
                     android:padding="5dp"
+                    android:background="#DCDADA"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gris"
                     android:textSize="17dp" />
@@ -1984,8 +2268,9 @@
                 android:textSize="40sp"
                 android:textStyle="bold"
                 android:background="#03A9F4"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:text="GUARDAR"
+                android:textColor="@color/white"
                 android:layout_below="@+id/textPregunta37"
                 />
 

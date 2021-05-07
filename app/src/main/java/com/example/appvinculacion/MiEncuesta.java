@@ -29,9 +29,9 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 public class MiEncuesta extends AppCompatActivity {
 
     private CheckBox check_otros,check_otros1,check_si,check_si1,check_si2,check_si3,check_rio,check_otros2,check_cisterna,check_tanque,check_si4,check_si5,check_otras,
-            check_animales,check_animal_consumo,check_animal_venta, check_riego,check_sembrio_consumo,check_sembrio_venta;
+            check_otras1,check_otras2,check_animales,check_animal_consumo,check_animal_venta, check_riego,check_sembrio_consumo,check_sembrio_venta;
 
-    private View campo_otros,campo_otros1,texto_info19,texto_otros;
+    private View campo_otros,campo_otros1,texto_info19,texto_otros,texto_otros1,texto_otros2;
 
     private LinearLayout textPregunta11,textPregunta13,textPregunta15,textPregunta17,textPregunta19,textPregunta20,textPregunta22,textPregunta23,textPregunta24,
             textPregunta25,textPregunta26,textPregunta27,textPregunta30,textPregunta32,textPregunta33,textPregunta34,textPregunta35,textPregunta36,textPregunta37;
@@ -268,6 +268,13 @@ public class MiEncuesta extends AppCompatActivity {
         texto_otros= findViewById(R.id.texto_otros);
 
 
+        check_otras1= (CheckBox) findViewById(R.id.check_otras1);
+        texto_otros1= findViewById(R.id.texto_otros1);
+
+        check_otras2= (CheckBox) findViewById(R.id.check_otras2);
+        texto_otros2= findViewById(R.id.texto_otros2);
+
+
 
         //Si da en otros se mostrará una caja de texto
         check_otros.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -422,6 +429,23 @@ public class MiEncuesta extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 texto_otros.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+
+            }
+        });
+
+
+        check_otras1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                texto_otros1.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+
+            }
+        });
+
+        check_otras2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                texto_otros2.setVisibility(isChecked ? View.VISIBLE : View.GONE);
 
             }
         });

@@ -231,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/texto_info10"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="15dp"
                     android:hint="Observaciones"
                     android:textSize="17dp"
@@ -242,7 +242,23 @@
                     android:textColorHint="@color/gris"/>
 
             </LinearLayout>
+            <Button
+                android:id="@+id/seccion2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="80dp"
 
+                android:layout_marginEnd="30dp"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:background="#03A9F4"
+                android:padding="15dp"
+                android:text="GUARDAR"
+                android:textColor="@color/white"
+                android:layout_below="@+id/textPregunta37"
+                />
 
 
         </LinearLayout>
