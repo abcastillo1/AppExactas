@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.appvinculacion">
+    <!-- Permisos para el internet -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Permisos para la camara e imagenes -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permisos para la camara e imagenes -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Permisos para el internet -->
-
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Permisos para la ubicacion o localizacion -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -18,9 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppVinculacion.NoActionBar"
-        tools:replace="android:appComponentFactory"
-        >
-        <activity android:name=".MiEncuesta2"></activity>
+        tools:replace="android:appComponentFactory">
+        <activity android:name=".UbicacionActivity"></activity>
+        <activity android:name=".MiEncuesta2" />
         <activity android:name=".MiEncuesta" />
         <activity android:name=".MenuEncuesta" />
         <activity android:name=".Menu" />

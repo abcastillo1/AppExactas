@@ -40,8 +40,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         switch (v.getId()){
             //case R.id.cardIniciar: i=new Intent(this,MiPerfil.class);startActivity(i);break;
             case R.id. cardEncuestar: i=new Intent(this,MenuEncuesta.class);startActivity(i);break;
-            //case R.id.cardRegistros: i=new Intent(this,MainActivity.class);;startActivity(i);break;
-            // case R.id.cardAcercade: i=new Intent(this,Acercade.class);startActivity(i);break;
+            case R.id.cardRegistros: i=new Intent(this,MainActivity.class);;startActivity(i);break;
+            case R.id.cardAcercade: i=new Intent(this,UbicacionActivity.class);startActivity(i);break;
             // case R.id.cardCredito: i=new Intent(this,Credito.class);startActivity(i);break;
             case R.id.cardCerrarSesion: cerrarSesion();break;
 
