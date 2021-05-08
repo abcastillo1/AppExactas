@@ -31,6 +31,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,6 +53,7 @@ public class MiEncuesta2 extends AppCompatActivity {
     //db helper
     //private MyDbHelper dbHelper;
 
+    private TextView TituloHora,HoraInicio;
     private TextView latitud,longitud;
     private TextView direccion;
 
@@ -62,16 +65,12 @@ public class MiEncuesta2 extends AppCompatActivity {
         profileIv=findViewById(R.id.profileIv);
 
 
-        //init db Helper
-        //dbHelper=new MyDbHelper(this);
+        initFechahora();
         initLocalizacion();
 
         //matrices de permisos de inicio
         cameraPermissions=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        //Botón para agregar la imagen del encuestador
-
 
         profileIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,6 +202,12 @@ public class MiEncuesta2 extends AppCompatActivity {
 
 
     //Para obtener ubicacion
+    private void initFechahora(){
+        TituloHora = (TextView) findViewById(R.id.TituloHora);
+        HoraInicio= (TextView) findViewById(R.id.HoraInicio);
+        fechayhora();
+    }
+
 
     private void initLocalizacion(){
         latitud = (TextView) findViewById(R.id.txtLatitud);
@@ -215,7 +220,6 @@ public class MiEncuesta2 extends AppCompatActivity {
         }
 
     }
-
 
     private void locationStart() {
         LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -244,6 +248,7 @@ public class MiEncuesta2 extends AppCompatActivity {
             }
         }
     }
+
     public void setLocation(Location loc) {
         //Obtener la direccion de la calle a partir de la latitud y la longitud
         if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
@@ -308,6 +313,21 @@ public class MiEncuesta2 extends AppCompatActivity {
             }
         }
     }
+
+    //fecha y hora
+    public void fechayhora() {
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+
+        String fecha = formatoFecha.format(date);
+        String Hora = formatoHora.format(date);
+        TituloHora.setText(fecha);
+        HoraInicio.setText(Hora);
+
+    }
+
 
 
 
