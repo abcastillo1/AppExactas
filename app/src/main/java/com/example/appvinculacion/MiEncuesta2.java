@@ -86,7 +86,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter2 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.7/sincronizar/saveNameapp.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta2.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -223,7 +223,12 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
             //image is picked
             if(requestCode==IMAGE_PICK_GALLERY_CODE){
                 //picked from gallery
-
+                Uri filePath = data.getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 //crop image
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)

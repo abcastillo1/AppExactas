@@ -150,7 +150,7 @@ public class UsuarioAdapter {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(c_CODIGO, codigo);
-        contentValues.put(c_NOMBRE, fecha);
+        contentValues.put(c_FECHA, fecha);
         contentValues.put(c_HORAINICIO, horaInicio);
         contentValues.put(c_HORAFIN, horaFin);
         contentValues.put(c_FOTO, Foto);
