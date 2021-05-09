@@ -40,7 +40,7 @@
                 android:src="@drawable/camara"
                 />
             <TextView
-                android:id="@+id/TituloHora"
+                android:id="@+id/TituloFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profileIv"
@@ -56,7 +56,7 @@
                 android:id="@+id/HoraInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profileIv"
+                android:layout_below="@+id/TituloFecha"
 
                 android:gravity="center_horizontal"
                 android:padding="10dp"
@@ -370,7 +370,7 @@
 
             </LinearLayout>
             <Button
-                android:id="@+id/seccion2"
+                android:id="@+id/buttonSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -384,7 +384,7 @@
                 android:padding="15dp"
                 android:text="GUARDAR"
                 android:textColor="@color/white"
-                android:layout_below="@+id/textPregunta37"
+                android:layout_below="@+id/textPregunta3"
                 />
 
 

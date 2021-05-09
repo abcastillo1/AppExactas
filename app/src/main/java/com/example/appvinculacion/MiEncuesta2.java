@@ -6,65 +6,111 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-public class MiEncuesta2 extends AppCompatActivity {
+public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListener{
+    //Mostrar nombre y codigo del encuestador
+    private SharedPreferences preferences;
+
     private ImageView profileIv;
-    // constantes de permisos
-    private static final int CAMERA_REQUEST_CODE=100;
+    private static final int CAMERA_REQUEST_CODE=100;// constantes de permisos
     private static final int STORAGE_REQUEST_CODE=101;
-    // constantes de selección de imágenes
-    private static final int IMAGE_PICK_CAMERA_CODE=102;
+    private static final int IMAGE_PICK_CAMERA_CODE=102;// constantes de selección de imágenes
     private static final int IMAGE_PICK_GALLERY_CODE=103;
-    // matrices de permisos
     private String[] cameraPermissions;//camara y almacenamiento
     private String[] storagePermissions;//solo almacenamiento
-    //variables(contendrá datos para guardar)
-    private Uri imageUri;
-    private String nombre,codigo;
-    //db helper
-    //private MyDbHelper dbHelper;
+    private Uri imageUri;//variables(contendrá datos para guardar)
+    private Bitmap bitmap;
 
-    private TextView TituloHora,HoraInicio;
+    private TextView TituloFecha,HoraInicio,txtLatitud,txtLongitud;
     private TextView latitud,longitud;
     private TextView direccion;
+
+    private UsuarioAdapter db;
+    //View objects
+    private Button buttonSave;
+    private ListView listViewNames;
+    private List<Name2> names;
+    private BroadcastReceiver broadcastReceiver;
+    public static final int NAME_SYNCED_WITH_SERVER = 1;
+    public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
+    private NameAdapter2 nameAdapter;
+    public static final String URL_SAVE_NAME = "http://192.168.1.7/sincronizar/saveNameapp.php";
+    public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_encuesta2);
 
+
+
+
+
+
+
+        registerReceiver(new NetworkStateChecker2(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        db = new UsuarioAdapter(this);
+        names = new ArrayList<>();
+        buttonSave = (Button) findViewById(R.id.buttonSave);
+        TituloFecha = (TextView) findViewById(R.id.TituloFecha);
+        HoraInicio = (TextView) findViewById(R.id.HoraInicio);
+        txtLatitud = (TextView) findViewById(R.id.txtLatitud);
+        txtLongitud = (TextView) findViewById(R.id.txtLongitud);
+
         profileIv=findViewById(R.id.profileIv);
-
-
         initFechahora();
         initLocalizacion();
 
@@ -78,7 +124,24 @@ public class MiEncuesta2 extends AppCompatActivity {
                 imagePickDialog();
             }
         });
+
+        //adding click listener to button
+        buttonSave.setOnClickListener(this);
+        loadNames();
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //loading the names again
+                loadNames();
+            }
+        };
+        //registering the broadcast receiver to update sync status
+        registerReceiver(broadcastReceiver, new IntentFilter(DATA_SAVED_BROADCAST));
+
+
+
     }
+
     private void imagePickDialog(){
         // opción para mostrar en el diálogo
         String[] options = {"Camara","Galería"};
@@ -182,6 +245,11 @@ public class MiEncuesta2 extends AppCompatActivity {
                 if(resultCode==RESULT_OK){
                     Uri resultUri=result.getUri();
                     imageUri = resultUri;
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     //set Image
                     profileIv.setImageURI(resultUri);
                 }
@@ -203,7 +271,7 @@ public class MiEncuesta2 extends AppCompatActivity {
 
     //Para obtener ubicacion
     private void initFechahora(){
-        TituloHora = (TextView) findViewById(R.id.TituloHora);
+        TituloFecha = (TextView) findViewById(R.id.TituloFecha);
         HoraInicio= (TextView) findViewById(R.id.HoraInicio);
         fechayhora();
     }
@@ -265,6 +333,8 @@ public class MiEncuesta2 extends AppCompatActivity {
             }
         }
     }
+
+
     /* Aqui empieza la Clase Localizacion */
     public class Localizacion implements LocationListener {
         MiEncuesta2 miEncuesta2;
@@ -323,12 +393,140 @@ public class MiEncuesta2 extends AppCompatActivity {
 
         String fecha = formatoFecha.format(date);
         String Hora = formatoHora.format(date);
-        TituloHora.setText(fecha);
+        TituloFecha.setText(fecha);
         HoraInicio.setText(Hora);
+    }
 
+    public String horaFinal() {
+
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+
+        String Hora = formatoHora.format(date);
+        return Hora;
     }
 
 
+
+
+
+
+    private void loadNames() {
+        names.clear();
+        Cursor cursor = db.getNames2();
+        if (cursor.moveToFirst()) {
+            do {
+                Name2 name = new Name2(
+                        cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
+                        cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
+                        cursor.getString(cursor.getColumnIndex(db.c_FOTO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LA)),
+                        cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
+                );
+                names.add(name);
+            } while (cursor.moveToNext());
+        }
+
+        nameAdapter = new NameAdapter2(this, R.layout.names, names);
+
+    }
+
+    private void saveNameToServer() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Guardando en el servidor...");
+        progressDialog.show();
+
+        preferences = getSharedPreferences("Preferences",MODE_PRIVATE);
+        //String usuario_nombre=preferences.getString("usuario_nombre", null);
+        String usuario_codigo=preferences.getString("usuario_codigo", null);
+
+        final String codigo = usuario_codigo;
+        final String fecha = TituloFecha.getText().toString().trim();
+        final String horaInicio = HoraInicio.getText().toString().trim();;
+        final String horaFin = this.horaFinal();
+        final String foto =getStringImagen(bitmap);
+        final String longitud = txtLongitud.getText().toString().trim();
+        final String latitud = txtLatitud.getText().toString().trim();
+
+
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_NAME,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject obj2 = new JSONObject(response);
+                            if (!obj2.getBoolean("error")) {
+                                // si hay un exito
+                                // almacenando el nombre en sqlite con estado sincronizado
+                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_SYNCED_WITH_SERVER);
+                            } else {
+                                // si hay algun error
+                                // guardando el nombre en sqlite con estado no sincronizado
+                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
+                        saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("codigo", codigo);
+                params.put("fecha", fecha);
+                params.put("horaInicio", horaInicio);
+                params.put("horaFin", horaFin);
+                params.put("foto", foto);
+                params.put("longitud", longitud);
+                params.put("latitud", latitud);
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+    private void saveNameToLocalStorage(String codigo, String fecha, String horaInicio, String horaFin, String foto, String longitud, String latitud, int status) {
+        //editTextCode.setText("");
+       // editTextName.setText("");
+        db.addName2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
+        Name2 n = new Name2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
+        names.add(n);
+        //refreshList();
+
+    }
+    public String getStringImagen(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+/*
+    private void refreshList() {
+        nameAdapter.notifyDataSetChanged();
+    }*/
+
+    @Override
+    public void onClick(View v) {
+        saveNameToServer();
+    }
 
 
 }

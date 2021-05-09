@@ -28,7 +28,8 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
         String usuario_codigo=preferences.getString("usuario_codigo", null);
 
         if(usuario_codigo!=null && usuario_nombre!=null){
-            textInicio.setText(usuario_nombre);
+            textInicio.setText(usuario_codigo);
+
         }
     }
 
@@ -41,7 +42,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener{
             //case R.id.cardIniciar: i=new Intent(this,MiPerfil.class);startActivity(i);break;
             case R.id. cardEncuestar: i=new Intent(this,MenuEncuesta.class);startActivity(i);break;
             case R.id.cardRegistros: i=new Intent(this,MainActivity.class);;startActivity(i);break;
-            case R.id.cardAcercade: i=new Intent(this,UbicacionActivity.class);startActivity(i);break;
+            case R.id.cardAcercade: i=new Intent(this,MainActivity2.class);startActivity(i);break;
             // case R.id.cardCredito: i=new Intent(this,Credito.class);startActivity(i);break;
             case R.id.cardCerrarSesion: cerrarSesion();break;
 
