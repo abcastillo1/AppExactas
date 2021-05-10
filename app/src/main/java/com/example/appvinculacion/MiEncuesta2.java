@@ -159,8 +159,8 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                     }
                 }
                 else if(which==1){
-                    if(!checkCameraPermissions()){
-                        requestCameraPermission();
+                    if(!checkStoragePermission()){
+                        requestStoragePermission();
                     }else{
                         // permiso ya concedido
                         pickFromGallery();
@@ -218,55 +218,54 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //image picked from camera or gallery will be recieved
+
+        // se recibirá la imagen seleccionada de la cámara o la galería
         if(resultCode==RESULT_OK){
-            //image is picked
+            // se elige la imagen
             if(requestCode==IMAGE_PICK_GALLERY_CODE){
-                //picked from gallery
-                Uri filePath = data.getData();
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //crop image
+                // elegido de la galería
+
+
+                //delimitar imagen
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(this);
             }
             else if(requestCode==IMAGE_PICK_CAMERA_CODE){
-                //picked from camera
+                // recogido de la cámara
 
-                //crop image
+                //delimitar imagen
                 CropImage.activity(imageUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(this);
             }
             else if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-                //croped image received
+                // imagen recortada recibida
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 if(resultCode==RESULT_OK){
                     Uri resultUri=result.getUri();
                     imageUri = resultUri;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //set Image
+
+
+                    // establecer imagen
                     profileIv.setImageURI(resultUri);
                 }
                 else if (resultCode==CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                     //error
                     Exception error = result.getError();
-                    Toast.makeText(this,""+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Error "+error, Toast.LENGTH_SHORT).show();
 
                 }
 
             }
 
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -314,12 +313,41 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 1000) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                locationStart();
-                return;
+        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+
+        switch (requestCode){
+            case CAMERA_REQUEST_CODE:{
+                if (grantResults.length>0){
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if(cameraAccepted&&storageAccepted){
+                        pickFromCamera();
+                    }else{
+                        Toast.makeText(this,"Se requieren permisos de cámara y almacenamiento",Toast.LENGTH_SHORT);
+                    }
+
+                }
+
+
+
             }
+            break;
+            case STORAGE_REQUEST_CODE:{
+                if (grantResults.length>0){
+                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if(storageAccepted){
+                        pickFromGallery();
+                    }else{
+                        Toast.makeText(this,"Se requieren permisos de cámara y almacenamiento",Toast.LENGTH_SHORT);
+
+                    }
+
+                }
+
+            }
+            break;
         }
+
     }
 
     public void setLocation(Location loc) {

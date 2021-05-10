@@ -38,7 +38,9 @@ public class NameAdapter2 extends ArrayAdapter<Name2> {
         Name2 name = names.get(position);
 
         //setting the name to textview
-        textViewName.setText(name.getHoraInicio());
+
+
+        textViewName.setText(name.getHoraFin());
 
         //if the synced status is 0 displaying
         //queued icon
