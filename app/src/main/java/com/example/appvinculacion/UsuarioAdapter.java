@@ -145,7 +145,7 @@ public class UsuarioAdapter {
 
     //METODOS AGREGADOS DE LA ENCUESTA
 
-    public boolean addName2(String codigo, String fecha, String horaInicio, String horaFin, String Foto,  String Longitud, String Latitud, int status) {
+    public long addName2(String codigo, String fecha, String horaInicio, String horaFin, String Foto,  String Longitud, String Latitud, int status) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -158,9 +158,9 @@ public class UsuarioAdapter {
         contentValues.put(c_UTM_LA, Latitud);
         contentValues.put(c_ESTADO, status);
 
-        db.insert(TABLE_NAME2, null, contentValues);
+        long id=db.insert(TABLE_NAME2, null, contentValues);
         db.close();
-        return true;
+        return id;
     }
     public boolean updateNameStatus2(int id, int status) {
         SQLiteDatabase db = helper.getWritableDatabase();

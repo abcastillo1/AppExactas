@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppVinculacion.NoActionBar"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".MenuRegistros"></activity>
         <activity android:name=".MainActivity2" />
         <activity android:name=".MiEncuesta2" />
         <activity android:name=".MiEncuesta" />

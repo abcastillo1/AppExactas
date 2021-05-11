@@ -86,7 +86,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter2 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta2.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.12/sincronizar/encuesta2.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -538,9 +538,11 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     private void saveNameToLocalStorage(String codigo, String fecha, String horaInicio, String horaFin, String foto, String longitud, String latitud, int status) {
         //editTextCode.setText("");
        // editTextName.setText("");
-        db.addName2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
+        long id= db.addName2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
         Name2 n = new Name2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
         names.add(n);
+
+        Toast.makeText(this,"Encuesta "+id+" agregada ",Toast.LENGTH_SHORT).show();
         //refreshList();
 
     }

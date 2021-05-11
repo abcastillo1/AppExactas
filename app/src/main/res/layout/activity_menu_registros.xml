@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuRegistros">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+
+        android:layout_below="@+id/TituloFecha"
+        app:srcCompat="@drawable/sky" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Sube todos tus registros al servidor"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:layout_below="@+id/imageView4"
+            />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:text="Usuarios Registrados"
+            android:layout_below="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:text="Encuesta 1" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="40dp"
+            android:text="Encuesta 2"
+            android:layout_below="@+id/button2"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </LinearLayout>
+
+
+
+
+
+</ScrollView>
