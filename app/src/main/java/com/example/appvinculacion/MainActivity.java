@@ -28,14 +28,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity {
 
     private UsuarioAdapter db;
 
     //View objects
     private Button buttonSave;
-    private EditText editTextCode;
-    private EditText editTextName;
+
     private ListView listViewNames;
 
     private List<Name> names;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private NameAdapter nameAdapter;
 
-    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/saveNameapp.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.12/sincronizar/saveNameapp.php";
 
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
@@ -61,12 +60,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         names = new ArrayList<>();
 
         buttonSave = (Button) findViewById(R.id.buttonSave);
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextCode = (EditText) findViewById(R.id.editTextCode);
+
         listViewNames = (ListView) findViewById(R.id.listViewNames);
 
         //adding click listener to button
-        buttonSave.setOnClickListener(this);
+
 
 
         loadNames();
@@ -101,74 +99,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         nameAdapter = new NameAdapter(this, R.layout.names, names);
         listViewNames.setAdapter(nameAdapter);
-    }
-
-    private void saveNameToServer() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Guardando en el servidor...");
-        progressDialog.show();
-
-        final String codigo = editTextCode.getText().toString().trim();
-        final String name = editTextName.getText().toString().trim();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_NAME,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            if (!obj.getBoolean("error")) {
-                                // si hay un exito
-                                // almacenando el nombre en sqlite con estado sincronizado
-                                saveNameToLocalStorage(codigo, name, NAME_SYNCED_WITH_SERVER);
-                            } else {
-                                // si hay algun error
-                                // guardando el nombre en sqlite con estado no sincronizado
-                                saveNameToLocalStorage(codigo, name, NAME_NOT_SYNCED_WITH_SERVER);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
-                        saveNameToLocalStorage(codigo, name, NAME_NOT_SYNCED_WITH_SERVER);
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("codigo", codigo);
-                params.put("nombre", name);
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-    }
-
-    private void saveNameToLocalStorage(String codigo, String name, int status) {
-        editTextCode.setText("");
-        editTextName.setText("");
-        db.addName(codigo, name, status);
-        Name n = new Name(codigo, name, status);
-        names.add(n);
         refreshList();
-
     }
+
+
 
     private void refreshList() {
         nameAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View v) {
-        saveNameToServer();
-    }
 }

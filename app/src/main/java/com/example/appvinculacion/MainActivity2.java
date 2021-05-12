@@ -85,5 +85,10 @@ public class MainActivity2 extends AppCompatActivity {
 
         nameAdapter = new NameAdapter2(this, R.layout.names, names);
         listViewNames.setAdapter(nameAdapter);
+        refreshList();
+    }
+
+    private void refreshList() {
+        nameAdapter.notifyDataSetChanged();
     }
 }

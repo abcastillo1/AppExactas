@@ -40,7 +40,7 @@ public class NameAdapter2 extends ArrayAdapter<Name2> {
         //setting the name to textview
 
 
-        textViewName.setText(name.getHoraFin());
+        textViewName.setText("Guardado a las: "+name.getHoraFin());
 
         //if the synced status is 0 displaying
         //queued icon

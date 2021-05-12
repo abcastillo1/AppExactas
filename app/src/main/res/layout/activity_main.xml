@@ -7,35 +7,31 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextCode"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:hint="Codigo" />
-
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:hint="Ingresa el nombre" />
-
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guardar" />
+            android:text="Usuarios registrados en el dispositivo"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18dp"
+            android:textStyle="italic"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textAlignment="center"/>
     </LinearLayout>
 
     <ListView
         android:id="@+id/listViewNames"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
+
 
 </LinearLayout>

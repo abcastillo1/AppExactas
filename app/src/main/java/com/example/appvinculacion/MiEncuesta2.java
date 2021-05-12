@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -64,19 +65,19 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     private SharedPreferences preferences;
 
     private ImageView profileIv;
-    private static final int CAMERA_REQUEST_CODE=100;// constantes de permisos
-    private static final int STORAGE_REQUEST_CODE=101;
-    private static final int IMAGE_PICK_CAMERA_CODE=102;// constantes de selección de imágenes
-    private static final int IMAGE_PICK_GALLERY_CODE=103;
+    private static final int CAMERA_REQUEST_CODE=200;// constantes de permisos
+    private static final int STORAGE_REQUEST_CODE=400;
+    private static final int IMAGE_PICK_CAMERA_CODE=1000;// constantes de selección de imágenes
+    private static final int IMAGE_PICK_GALLERY_CODE=1001;
     private String[] cameraPermissions;//camara y almacenamiento
     private String[] storagePermissions;//solo almacenamiento
     private Uri imageUri;//variables(contendrá datos para guardar)
-    private Bitmap bitmap;
+
 
     private TextView TituloFecha,HoraInicio,txtLatitud,txtLongitud;
     private TextView latitud,longitud;
     private TextView direccion;
-
+    private Bitmap bitmap;
     private UsuarioAdapter db;
     //View objects
     private Button buttonSave;
@@ -181,9 +182,8 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
     private void pickFromCamera() {
         ContentValues values=new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "Título de la imagen");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "Descripción de la imagen");
-
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera");
         imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
         // intento de abrir la cámara para la imagen
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -225,9 +225,9 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
             if(requestCode==IMAGE_PICK_GALLERY_CODE){
                 // elegido de la galería
 
-
+                Uri resultUri  = data.getData();
                 //delimitar imagen
-                CropImage.activity(data.getData())
+                CropImage.activity(resultUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(this);
@@ -246,8 +246,12 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 if(resultCode==RESULT_OK){
                     Uri resultUri=result.getUri();
-                    imageUri = resultUri;
 
+                    try {
+                        bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), resultUri));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     // establecer imagen
                     profileIv.setImageURI(resultUri);
@@ -261,11 +265,6 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
             }
 
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
         }
 
@@ -313,7 +312,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+
 
         switch (requestCode){
             case CAMERA_REQUEST_CODE:{
@@ -546,12 +545,14 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         //refreshList();
 
     }
-    public String getStringImagen(Bitmap bmp){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+    public String getStringImagen(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStreamObject ;
+        byteArrayOutputStreamObject = new ByteArrayOutputStream();
+        // Converting bitmap image to jpeg format, so by default image will upload in jpeg format.
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStreamObject);
+        byte[] byteArrayVar = byteArrayOutputStreamObject.toByteArray();
+        final String ConvertImage = Base64.encodeToString(byteArrayVar, Base64.DEFAULT);
+        return ConvertImage;
     }
 /*
     private void refreshList() {
