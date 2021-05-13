@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.location.LocationProvider;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
@@ -37,6 +39,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -51,9 +54,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -61,23 +66,43 @@ import java.util.Locale;
 import java.util.Map;
 
 public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListener{
+
+    private static final String CERO = "0";
+    private static final String DOS_PUNTOS = ":";
+    //Calendario para obtener fecha & hora
+    public final Calendar c = Calendar.getInstance();
+    //Variables para obtener la hora hora
+    final int hora = c.get(Calendar.HOUR_OF_DAY);
+    final int minuto = c.get(Calendar.MINUTE);
+    //Widgets
+    EditText etHora;
+    Button ibObtenerHora;
+
+
     //Mostrar nombre y codigo del encuestador
     private SharedPreferences preferences;
 
+    private static final String CARPETA_PRICIPAL="misImagenesApp/";
+    private static final String CARPETA_IMAGEN="imagenes";
+    private static final String DIRECTORIO_IMAGEN=CARPETA_PRICIPAL+CARPETA_IMAGEN;
+    private String path;//almacena la ruta de la imagen
+    File fileImagen;
+    Bitmap bitmap;
+
     private ImageView profileIv;
-    private static final int CAMERA_REQUEST_CODE=200;// constantes de permisos
-    private static final int STORAGE_REQUEST_CODE=400;
-    private static final int IMAGE_PICK_CAMERA_CODE=1000;// constantes de selección de imágenes
-    private static final int IMAGE_PICK_GALLERY_CODE=1001;
+    private static final int CAMERA_REQUEST_CODE=100;// constantes de permisos
+    private static final int STORAGE_REQUEST_CODE=101;
+    private static final int IMAGE_PICK_CAMERA_CODE=102;// constantes de selección de imágenes
+    private static final int IMAGE_PICK_GALLERY_CODE=103;
     private String[] cameraPermissions;//camara y almacenamiento
     private String[] storagePermissions;//solo almacenamiento
     private Uri imageUri;//variables(contendrá datos para guardar)
 
 
     private TextView TituloFecha,HoraInicio,txtLatitud,txtLongitud;
-    private TextView latitud,longitud;
+    //private TextView latitud,longitud;
     private TextView direccion;
-    private Bitmap bitmap;
+
     private UsuarioAdapter db;
     //View objects
     private Button buttonSave;
@@ -87,7 +112,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter2 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.12/sincronizar/encuesta2.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.7/sincronizar/encuesta2.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -108,8 +133,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         buttonSave = (Button) findViewById(R.id.buttonSave);
         TituloFecha = (TextView) findViewById(R.id.TituloFecha);
         HoraInicio = (TextView) findViewById(R.id.HoraInicio);
-        txtLatitud = (TextView) findViewById(R.id.txtLatitud);
-        txtLongitud = (TextView) findViewById(R.id.txtLongitud);
+
 
         profileIv=findViewById(R.id.profileIv);
         initFechahora();
@@ -181,14 +205,17 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     }
 
     private void pickFromCamera() {
+
         ContentValues values=new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From Camera");
-        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        imageUri = getContentResolver().insert(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
         // intento de abrir la cámara para la imagen
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE);
+
+
     }
 
     private boolean checkStoragePermission() {
@@ -216,6 +243,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         ActivityCompat.requestPermissions(this,cameraPermissions,CAMERA_REQUEST_CODE);
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -225,9 +253,9 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
             if(requestCode==IMAGE_PICK_GALLERY_CODE){
                 // elegido de la galería
 
-                Uri resultUri  = data.getData();
+
                 //delimitar imagen
-                CropImage.activity(resultUri)
+                CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(this);
@@ -248,7 +276,9 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                     Uri resultUri=result.getUri();
 
                     try {
-                        bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), resultUri));
+                        //bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), resultUri));
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -272,17 +302,21 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     }
 
 
+
     //Para obtener ubicacion
     private void initFechahora(){
         TituloFecha = (TextView) findViewById(R.id.TituloFecha);
         HoraInicio= (TextView) findViewById(R.id.HoraInicio);
         fechayhora();
+        etHora = (EditText) findViewById(R.id.et_mostrar_hora_picker);
+        ibObtenerHora = (Button) findViewById(R.id.ib_obtener_hora);
+        ibObtenerHora.setOnClickListener(this);
     }
 
 
     private void initLocalizacion(){
-        latitud = (TextView) findViewById(R.id.txtLatitud);
-        longitud = (TextView) findViewById(R.id.txtLongitud);
+        txtLatitud = (TextView) findViewById(R.id.txtLatitud);
+        txtLongitud = (TextView) findViewById(R.id.txtLongitud);
         direccion = (TextView) findViewById(R.id.txtDireccion);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
@@ -307,7 +341,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         }
         mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
         mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
-        latitud.setText("Localización agregada");
+        txtLatitud.setText("Localización agregada");
         direccion.setText("");
     }
 
@@ -366,6 +400,31 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    private void obtenerHora(){
+        TimePickerDialog recogerHora = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                //Formateo el hora obtenido: antepone el 0 si son menores de 10
+                String horaFormateada =  (hourOfDay < 10)? String.valueOf(CERO + hourOfDay) : String.valueOf(hourOfDay);
+                //Formateo el minuto obtenido: antepone el 0 si son menores de 10
+                String minutoFormateado = (minute < 10)? String.valueOf(CERO + minute):String.valueOf(minute);
+                //Obtengo el valor a.m. o p.m., dependiendo de la selección del usuario
+                String AM_PM;
+                if(hourOfDay < 12) {
+                    AM_PM = "a.m.";
+                } else {
+                    AM_PM = "p.m.";
+                }
+                //Muestro la hora con el formato deseado
+                etHora.setText(horaFormateada + DOS_PUNTOS + minutoFormateado + " " + AM_PM);
+            }
+            //Estos valores deben ir en ese orden
+            //Al colocar en false se muestra en formato 12 horas y true en formato 24 horas
+            //Pero el sistema devuelve la hora en formato 24 horas
+        }, hora, minuto, false);
+
+        recogerHora.show();
+    }
 
     /* Aqui empieza la Clase Localizacion */
     public class Localizacion implements LocationListener {
@@ -384,21 +443,21 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
             loc.getLongitude();
             String sLatitud = String.valueOf(loc.getLatitude());
             String sLongitud = String.valueOf(loc.getLongitude());
-            latitud.setText(sLatitud);
-            longitud.setText(sLongitud);
+            txtLatitud.setText(sLatitud);
+            txtLongitud.setText(sLongitud);
             this.miEncuesta2.setLocation(loc);
         }
         @Override
         public void onProviderDisabled(String provider) {
             // Este metodo se ejecuta cuando el GPS es desactivado
-            latitud.setText("GPS Desactivado");
-            longitud.setText("GPS Desactivado");
+            txtLatitud.setText("GPS Desactivado");
+            txtLongitud.setText("GPS Desactivado");
         }
         @Override
         public void onProviderEnabled(String provider) {
             // Este metodo se ejecuta cuando el GPS es activado
-            latitud.setText("GPS Activado");
-            longitud.setText("GPS Activado");
+            txtLatitud.setText("GPS Activado");
+            txtLongitud.setText("GPS Activado");
         }
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -415,7 +474,6 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
     //fecha y hora
     public void fechayhora() {
 
@@ -437,11 +495,6 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         String Hora = formatoHora.format(date);
         return Hora;
     }
-
-
-
-
-
 
     private void loadNames() {
         names.clear();
@@ -534,6 +587,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
+
     private void saveNameToLocalStorage(String codigo, String fecha, String horaInicio, String horaFin, String foto, String longitud, String latitud, int status) {
         //editTextCode.setText("");
        // editTextName.setText("");
@@ -545,6 +599,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         //refreshList();
 
     }
+
     public String getStringImagen(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStreamObject ;
         byteArrayOutputStreamObject = new ByteArrayOutputStream();
@@ -554,6 +609,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         final String ConvertImage = Base64.encodeToString(byteArrayVar, Base64.DEFAULT);
         return ConvertImage;
     }
+
 /*
     private void refreshList() {
         nameAdapter.notifyDataSetChanged();
@@ -561,7 +617,19 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        saveNameToServer();
+
+
+        switch (v.getId()){
+            case R.id.ib_obtener_hora:
+                obtenerHora();
+                break;
+            case R.id. buttonSave:
+                saveNameToServer();
+                break;
+
+        }
+
+
     }
 
 

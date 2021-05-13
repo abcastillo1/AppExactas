@@ -291,6 +291,57 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/textPreguntaMuestra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textPregunta3"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+                <TextView
+                    android:id="@+id/texto_info11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="HORA DE TOMA DE MUESTRA"
+                    android:textSize="18dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:background="#E64187FF"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_mostrar_hora_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="time"
+                    android:hint="@string/formato_hora"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/texto_info11" />
+
+                <Button
+                    android:id="@+id/ib_obtener_hora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:background="#03A9F4"
+                    android:padding="5dp"
+                    android:text="GUARDAR"
+                    android:textColor="@color/white"
+                    android:layout_below="@+id/textPregunta3"
+               />
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
                 android:id="@+id/textPregunta3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
