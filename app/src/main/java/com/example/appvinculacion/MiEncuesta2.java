@@ -35,6 +35,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -67,6 +68,13 @@ import java.util.Map;
 
 public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListener{
 
+    private CheckBox check_cisterna,check_tanque,check_pozo,check_rio;
+    private CheckBox check_turbia,check_solidos,check_coloracion,check_olor;
+    private EditText etHora,texto_diagnostico;
+
+
+
+
     private static final String CERO = "0";
     private static final String DOS_PUNTOS = ":";
     //Calendario para obtener fecha & hora
@@ -75,7 +83,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     final int hora = c.get(Calendar.HOUR_OF_DAY);
     final int minuto = c.get(Calendar.MINUTE);
     //Widgets
-    EditText etHora;
+
     Button ibObtenerHora;
 
 
@@ -112,7 +120,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter2 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.7/sincronizar/encuesta2.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.6/sincronizar/encuesta2.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -143,15 +151,11 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         cameraPermissions=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        profileIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imagePickDialog();
-            }
-        });
 
-        //adding click listener to button
+
+        profileIv.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
+
         loadNames();
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -300,8 +304,6 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
 
     //Para obtener ubicacion
     private void initFechahora(){
@@ -623,6 +625,10 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
             case R.id.ib_obtener_hora:
                 obtenerHora();
                 break;
+            case R.id. profileIv:
+                imagePickDialog();
+                break;
+
             case R.id. buttonSave:
                 saveNameToServer();
                 break;

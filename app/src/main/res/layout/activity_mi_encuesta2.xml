@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:gravity="right"
-                    android:text="Latitud"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="18dp" />
 
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:gravity="right"
-                    android:text="Latitud"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="18dp" />
 
@@ -279,7 +279,7 @@
                     android:theme="@style/MyCheckBox" />
 
                 <CheckBox
-                    android:id="@+id/check_"
+                    android:id="@+id/check_rio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
