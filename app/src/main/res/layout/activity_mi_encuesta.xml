@@ -41,6 +41,34 @@
                 android:src="@drawable/camara" />
 
             <TextView
+                android:id="@+id/TituloFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profileIv"
+
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="fecha"
+                android:textAlignment="center"
+                android:textColor="@color/nos"
+                android:textSize="10dp"
+                />
+            <TextView
+                android:id="@+id/HoraInicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TituloFecha"
+
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Hora"
+                android:textAlignment="center"
+                android:textColor="@color/nos"
+                android:textSize="10dp"
+
+                />
+
+            <TextView
                 android:id="@+id/TituloLocalizacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

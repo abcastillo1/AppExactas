@@ -2,22 +2,26 @@ package com.example.appvinculacion;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.provider.MediaStore;
-
-
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +31,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,12 +39,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MiEncuesta extends AppCompatActivity implements View.OnClickListener{
     private Button seccion2;
@@ -169,8 +187,21 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     //private MyDbHelper dbHelper;
 
 
-    TextView latitud,longitud;
-    TextView direccion;
+    private TextView TituloFecha,HoraInicio, latitud,longitud;
+    private TextView direccion;
+
+    private SharedPreferences preferences;
+
+    private UsuarioAdapter db;
+    private Button buttonSave;
+    private ListView listViewNames;
+    private List<Name1> names;
+    private BroadcastReceiver broadcastReceiver;
+    public static final int NAME_SYNCED_WITH_SERVER = 1;
+    public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
+    private NameAdapter1 nameAdapter;
+    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta3.php";
+    public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
 
@@ -178,9 +209,15 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_encuesta);
+        registerReceiver(new NetworkStateChecker2(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        db = new UsuarioAdapter(this);
+        names = new ArrayList<>();
+
+
         init();
         profileIv=findViewById(R.id.profileIv);
-
+        TituloFecha = (TextView) findViewById(R.id.TituloFecha);
+        HoraInicio= (TextView) findViewById(R.id.HoraInicio);
         latitud = (TextView) findViewById(R.id.txtLatitud);
         longitud = (TextView) findViewById(R.id.txtLongitud);
         direccion = (TextView) findViewById(R.id.txtDireccion);
@@ -1247,6 +1284,170 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
             }
         }
     }
+
+    public String horaFinal() {
+
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+
+        String Hora = formatoHora.format(date);
+        return Hora;
+    }
+
+    ///CONEXION CON LA DBB Y ENVÍO DE DATOS
+
+    private void loadNames() {
+        names.clear();
+        Cursor cursor = db.getNames1();
+        if (cursor.moveToFirst()) {
+            do {
+                Name1 name = new Name1(
+                        cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
+                        cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
+                );
+                names.add(name);
+            } while (cursor.moveToNext());
+        }
+
+        nameAdapter = new NameAdapter1(this, R.layout.names, names);
+
+    }
+
+
+
+    private void saveNameToLocalStorage(String codigo, String fecha, String horaInicio, String horaFin, String foto,
+                                        String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, int numeroPersonas,
+                                        int problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, int enfermedadPiel,  String tipoEnfermedadPiel,
+                                        String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
+                                        String tratamientoOrigenAgua, String usoAgua, int capacidadTanque, int capacidadSisterna, String frecuenciaLimpieza, String frecuenciaCloracion,
+                                        String otroFrecuenciaCloracion, String dosisCloracion, String otroDosisCloracion, int mascotas_animal, String consumo_animal, String venta_animal,
+                                        int ornamentales_riego, String consumo_riego, String venta_riego, int status) {
+        //editTextCode.setText("");
+        // editTextName.setText("");
+        long id= db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
+                otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
+                usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
+                otroDosisCloracion, mascotas_animal, consumo_animal, venta_animal, ornamentales_riego, consumo_riego, venta_riego, status);
+
+
+        Name1 n = new Name1(codigo, horaFin, status);
+        names.add(n);
+
+        Toast.makeText(this,"Encuesta "+id+" agregada ",Toast.LENGTH_SHORT).show();
+        //refreshList();
+
+    }
+
+    private void saveNameToServer() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Guardando en el servidor...");
+        progressDialog.show();
+
+        preferences = getSharedPreferences("Preferences",MODE_PRIVATE);
+        //String usuario_nombre=preferences.getString("usuario_nombre", null);
+        String usuario_codigo=preferences.getString("usuario_codigo", null);
+
+        final String codigo = usuario_codigo;
+        final String fecha = TituloFecha.getText().toString().trim();
+        final String horaInicio = HoraInicio.getText().toString().trim();;
+        final String horaFin = this.horaFinal();
+        final Uri foto =imageUri;
+       // final String longitud = txtLongitud.getText().toString().trim();
+        //final String latitud = txtLatitud.getText().toString().trim();
+
+        final String tipoVivienda
+        final String         otroTipoVivienda
+        final String numeroPisos
+        final String        techo
+        final Stringparedes
+        final String       piso
+        final String vivienda
+        final String numeroPersonas
+        problemasEstomacales
+                tipoProblemasEstomacales
+        otroProblemasEstomacales
+                enfermedadPiel
+        tipoEnfermedadPiel
+                otraEnfermedadPiel
+        abastecimientoAgua
+                nombreRio
+        otroAbastecimientoAgua
+                sisternaTanque
+        origenAgua
+                tratamientoOrigenAgua
+                usoAgua
+                        capacidadTanque
+        capacidadSisterna
+                frecuenciaLimpieza
+        frecuenciaCloracion
+                otroFrecuenciaCloracion
+        dosisCloracion
+                otroDosisCloracion
+        mascotas_animal
+                consumo_animal
+        venta_animal
+                ornamentales_riego
+        consumo_riego
+                venta_riego
+        status
+
+
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_NAME,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject obj2 = new JSONObject(response);
+                            if (!obj2.getBoolean("error")) {
+                                // si hay un exito
+                                // almacenando el nombre en sqlite con estado sincronizado
+                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_SYNCED_WITH_SERVER);
+                            } else {
+                                // si hay algun error
+                                // guardando el nombre en sqlite con estado no sincronizado
+                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
+                        saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("codigo", codigo);
+                params.put("fecha", fecha);
+                params.put("horaInicio", horaInicio);
+                params.put("horaFin", horaFin);
+                params.put("foto", foto);
+                params.put("longitud", longitud);
+                params.put("latitud", latitud);
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+
+
+
+
 
 
     @Override
