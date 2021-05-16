@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private NameAdapter nameAdapter;
 
-    public static final String URL_SAVE_NAME = "http://192.168.1.6/sincronizar/saveNameapp.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/saveNameapp.php";
 
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 

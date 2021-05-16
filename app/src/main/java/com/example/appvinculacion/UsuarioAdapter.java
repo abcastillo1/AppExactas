@@ -113,52 +113,44 @@ public class UsuarioAdapter {
             + c_CODIGO + " VARCHAR, "
             + c_CODIGO_PERSONA +" VARCHAR, "
             + c_FECHA + " VARCHAR, "
-            + c_NUM +" INTEGER AUTOINCREMENT, "
+            + c_NUM +" VARCHAR , "//int
             + c_HORAINICIO + " VARCHAR, "
             + c_HORAFIN + " VARCHAR, "
-            + c_FOTO + " BLOB, "
-            + c_TIPOVIVIENDA+ " VARCHAR, "
-            + c_OTROTIPOVIVIENDA+ " VARCHAR, "
-            + c_NUMEROPISOS+ " INTEGER, "
-            + c_TECHO+ " VARCHAR, "
-            + c_PAREDES+ " VARCHAR, "
-            + c_PISO+ " VARCHAR, "
-            + c_VIVIENDA+ " VARCHAR, "
-            + c_NUMEROPERSONAS+ " INTEGER, "
-            + c_PROBLEMASESTOMACALES+ " INTEGER, "
-            + c_TIPOPROBLEMASESTOMACALES+ " VARCHAR, "
-            + c_OTROTIPOPROBLEMASESTOMACALES+ " VARCHAR, "
-            + c_ENFERMEDADPIEL+ " INTEGER, "
-            + c_TIPOENFERMEDADPIEL+ " VARCHAR, "
-            + c_OTRAENFERMEDADPIEL+ " VARCHAR, "
-            + c_ABASTECIMIENTOAGUA+ " VARCHAR, "
-            + c_NOMBRERIO+ " VARCHAR, "
-            +  c_OTROABASTECIMIENTOAGUA+ " VARCHAR, "
-            + c_SISTERNATANQUE+ " VARCHAR, "
-            + c_ORIGENAGUA+ " VARCHAR, "
-            + c_TRATAMIENTOORIGENAGUA+ " VARCHAR, "
-            + c_USOAGUA+ " VARCHAR, "
-
-            + c_CAPACIDADTANQUE+ " INTEGER, "
-            + c_CAPACIDADSISTERNA+ " INTEGER, "
-
-            + c_FRECUENCIALIMPIEZA+ " VARCHAR, "
-            + c_FRECUENCIACLORACION+ " VARCHAR, "
-            + c_OTROFRECUENCIACLORACION+ " VARCHAR, "
-            + c_DOSISCLORACION+ " VARCHAR, "
-            + c_OTRODOSISCLORACION+ " VARCHAR, "
-
-
-
-            + c_MASCOTASANIMAL+ " INTEGER, "
-            + c_CONSUMOSANIMAL+ " VARCHAR, "
-            + c_VENTAANIMAL+ " VARCHAR, "
-            + c_ORNAMENTALESRIEGO+ " INTEGER, "
-            + c_CONSUMORIEGO+ " VARCHAR, "
-            + c_VENTARIEGO+ " VARCHAR, "
-
-
-
+            + c_FOTO + " VARCHAR, "
+            + c_TIPOVIVIENDA + " VARCHAR, "
+            + c_OTROTIPOVIVIENDA + " VARCHAR, "
+            + c_NUMEROPISOS + " VARCHAR, "//int
+            + c_TECHO + " VARCHAR, "
+            + c_PAREDES + " VARCHAR, "
+            + c_PISO + " VARCHAR, "
+            + c_VIVIENDA + " VARCHAR, "
+            + c_NUMEROPERSONAS + " VARCHAR, "
+            + c_PROBLEMASESTOMACALES + " VARCHAR, "//int
+            + c_TIPOPROBLEMASESTOMACALES + " VARCHAR, "
+            + c_OTROTIPOPROBLEMASESTOMACALES + " VARCHAR, "
+            + c_ENFERMEDADPIEL + " VARCHAR, "//int
+            + c_TIPOENFERMEDADPIEL + " VARCHAR, "
+            + c_OTRAENFERMEDADPIEL + " VARCHAR, "
+            + c_ABASTECIMIENTOAGUA + " VARCHAR, "
+            + c_NOMBRERIO + " VARCHAR, "
+            +  c_OTROABASTECIMIENTOAGUA + " VARCHAR, "
+            + c_SISTERNATANQUE + " VARCHAR, "
+            + c_ORIGENAGUA + " VARCHAR, "
+            + c_TRATAMIENTOORIGENAGUA + " VARCHAR, "
+            + c_USOAGUA + " VARCHAR, "
+            + c_CAPACIDADTANQUE + " VARCHAR, "//int
+            + c_CAPACIDADSISTERNA + " VARCHAR, "//int
+            + c_FRECUENCIALIMPIEZA + " VARCHAR, "
+            + c_FRECUENCIACLORACION + " VARCHAR, "
+            + c_OTROFRECUENCIACLORACION + " VARCHAR, "
+            + c_DOSISCLORACION + " VARCHAR, "
+            + c_OTRODOSISCLORACION + " VARCHAR, "
+            + c_MASCOTASANIMAL + " VARCHAR, "//int
+            + c_CONSUMOSANIMAL + " VARCHAR, "
+            + c_VENTAANIMAL + " VARCHAR, "
+            + c_ORNAMENTALESRIEGO + " VARCHAR, "//int
+            + c_CONSUMORIEGO + " VARCHAR, "
+            + c_VENTARIEGO + " VARCHAR, "
             + c_ESTADO + " TINYINT);";
 
 
@@ -293,15 +285,15 @@ public class UsuarioAdapter {
     //METODOS AGREGADOS DE LA ENCUESTA1
 
     public long addName1(String codigo, String fecha, String horaInicio, String horaFin, String Foto,
-                         String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, int numeroPersonas,
-                         int problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, int enfermedadPiel,  String tipoEnfermedadPiel,
+                         String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, String numeroPersonas,
+                         String problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, String enfermedadPiel,  String tipoEnfermedadPiel,
                          String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
-                         String tratamientoOrigenAgua, String usoAgua, int capacidadTanque, int capacidadSisterna, String frecuenciaLimpieza, String frecuenciaCloracion,
-                         String otroFrecuenciaCloracion, String dosisCloracion, String otroDosisCloracion, int mascotas_animal, String consumo_animal, String venta_animal,
-                         int ornamentales_riego, String consumo_riego, String venta_riego, int status) {
+                         String tratamientoOrigenAgua, String usoAgua, String capacidadTanque, String capacidadSisterna, String frecuenciaLimpieza, String frecuenciaCloracion,
+                         String otroFrecuenciaCloracion, String dosisCloracion, String otroDosisCloracion, String mascotas_animal, String consumo_animal, String venta_animal,
+                         String ornamentales_riego, String consumo_riego, String venta_riego, int status) {
 
 
-        SQLiteDatabase db = helper.getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(c_CODIGO, codigo);
@@ -346,8 +338,8 @@ public class UsuarioAdapter {
         contentValues.put(c_ESTADO, status);
 
 
-        long id=db.insert(TABLE_NAME1, null, contentValues);
-        db.close();
+        long id=database.insert(TABLE_NAME1, null, contentValues);
+        database.close();
         return id;
     }
     public boolean updateNameStatus1(int id, int status) {

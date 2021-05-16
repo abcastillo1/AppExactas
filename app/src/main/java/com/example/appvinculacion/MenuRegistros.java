@@ -40,7 +40,7 @@ public class MenuRegistros extends AppCompatActivity implements View.OnClickList
 
         switch (v.getId()){
             case R.id.button1: i=new Intent(this,MainActivity.class);startActivity(i);break;
-           // case R.id.button2: i=new Intent(this,MiEncuesta2.class);startActivity(i);break;
+            case R.id.button2: i=new Intent(this,MainActivity1.class);startActivity(i);break;
             case R.id.button3: i=new Intent(this,MainActivity2.class);startActivity(i);break;
 
             default:break;
