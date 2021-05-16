@@ -200,7 +200,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter1 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta1.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.9/sincronizar/encuesta1.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -1073,7 +1073,12 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         int val7 = (opc7) ? 1 : 0;
         int val8 = (opc8) ? 1 : 0;
 
-        return val1+""+val2+""+val3+""+val4+""+val5+""+val6+""+val7+""+val8;
+        if(val1==0 && val2==0 && val3==0 && val4==0 && val5==0 && val6==0 && val7==0 && val8==0){
+            return "";
+        }else{
+            return val1+""+val2+""+val3+""+val4+""+val5+""+val6+""+val7+""+val8;
+        }
+
     }//con qué frecuencia realiza la limpieza o lavado
     public String pregunta17(){
         Boolean opc1= check_semanal1.isChecked();
@@ -1096,7 +1101,13 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         int val8 = (opc8) ? 1 : 0;
         int val9 = (opc9) ? 1 : 0;
 
-        return val1+""+val2+""+val3+""+val4+""+val5+""+val6+""+val7+""+val8+""+val9;
+        if(val1==0 && val2==0 && val3==0 && val4==0 && val5==0 && val6==0 && val7==0 && val8==0 && val9==0){
+            return "";
+        }else{
+            return val1+""+val2+""+val3+""+val4+""+val5+""+val6+""+val7+""+val8+""+val9;
+        }
+
+
     }//¿CON QUÉ FRECUENCIA CLORA EL TANQUE?
     public String pregunta18(){
         Boolean opc1= check_op1.isChecked();
@@ -1119,7 +1130,13 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         int val8 = (opc8) ? 1 : 0;
         int val9 = (opc9) ? 1 : 0;
 
-        return val1+""+val2+""+val3+""+val4+""+val5+""+val6+""+val7+""+val8+""+val9;
+
+        if(val1==0 && val2==0 && val3==0 && val4==0 && val5==0 && val6==0 && val7==0 && val8==0 && val9==0){
+            return "";
+        }else{
+            return val1+""+val2+""+val3+""+val4+""+val5+""+val6+""+val7+""+val8+""+val9;
+        }
+
     }//dosificacion utilizada
     public String pregunta19(){
         Boolean opc1= check_llave.isChecked();
@@ -1335,7 +1352,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                         String ornamentales_riego, String consumo_riego, String venta_riego, int status) {
         //editTextCode.setText("");
         // editTextName.setText("");
-        long id= db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+        db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1345,7 +1362,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         Name1 n = new Name1(codigo, horaFin, status);
         names.add(n);
 
-        Toast.makeText(this,"Encuesta "+id+" agregada ",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Encuesta  agregada ",Toast.LENGTH_SHORT).show();
         //refreshList();
 
     }

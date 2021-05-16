@@ -18,6 +18,8 @@ public class NameAdapter1 extends ArrayAdapter<Name1> {
 
     public NameAdapter1(Context context, int resource,List<Name1> names) {
         super(context, resource,names);
+        this.context = context;
+        this.names = names;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

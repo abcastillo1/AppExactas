@@ -53,16 +53,16 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                                 cursor.getString(cursor.getColumnIndex(db.c_FOTO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_TIPOVIVIENDA )),
                                 cursor.getString(cursor.getColumnIndex(db.c_OTROTIPOVIVIENDA)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_NUMEROPISOS)),
+                                cursor.getString(cursor.getColumnIndex(db.c_NUMEROPISOS)),
                                 cursor.getString(cursor.getColumnIndex(db.c_TECHO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_PAREDES)),
                                 cursor.getString(cursor.getColumnIndex(db.c_PISO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_VIVIENDA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_NUMEROPERSONAS)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_PROBLEMASESTOMACALES)),
+                                cursor.getString(cursor.getColumnIndex(db.c_PROBLEMASESTOMACALES)),
                                 cursor.getString(cursor.getColumnIndex(db.c_TIPOPROBLEMASESTOMACALES)),
                                 cursor.getString(cursor.getColumnIndex(db.c_OTROTIPOPROBLEMASESTOMACALES)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_ENFERMEDADPIEL)),
+                                cursor.getString(cursor.getColumnIndex(db.c_ENFERMEDADPIEL)),
                                 cursor.getString(cursor.getColumnIndex(db.c_TIPOENFERMEDADPIEL)),
                                 cursor.getString(cursor.getColumnIndex(db.c_OTRAENFERMEDADPIEL)),
                                 cursor.getString(cursor.getColumnIndex(db.c_ABASTECIMIENTOAGUA)),
@@ -72,17 +72,17 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                                 cursor.getString(cursor.getColumnIndex(db.c_ORIGENAGUA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_TRATAMIENTOORIGENAGUA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_USOAGUA)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_CAPACIDADTANQUE)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_CAPACIDADSISTERNA)),
+                                cursor.getString(cursor.getColumnIndex(db.c_CAPACIDADTANQUE)),
+                                cursor.getString(cursor.getColumnIndex(db.c_CAPACIDADSISTERNA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_FRECUENCIALIMPIEZA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_FRECUENCIACLORACION)),
                                 cursor.getString(cursor.getColumnIndex(db.c_OTROFRECUENCIACLORACION)),
                                 cursor.getString(cursor.getColumnIndex(db.c_DOSISCLORACION)),
                                 cursor.getString(cursor.getColumnIndex(db.c_OTRODOSISCLORACION)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_MASCOTASANIMAL)),
+                                cursor.getString(cursor.getColumnIndex(db.c_MASCOTASANIMAL)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CONSUMOSANIMAL)),
                                 cursor.getString(cursor.getColumnIndex(db.c_VENTAANIMAL)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_ORNAMENTALESRIEGO)),
+                                cursor.getString(cursor.getColumnIndex(db.c_ORNAMENTALESRIEGO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CONSUMORIEGO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_VENTARIEGO)),
                                 cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
@@ -94,20 +94,49 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
         }
 
     }
-    private void saveName(final int id,final String codigo,final  String fecha,final String horaInicio,final String horaFin,final String foto,
-                          final String tipoVivienda, final String otroTipoVivienda, final int numeroPisos, final String techo ,
-                          final String paredes, final String piso, final String vivienda, final String numeroPersonas,
-                          final int problemasEstomacales,  final String tipoProblemasEstomacales, final String otroProblemasEstomacales, final int enfermedadPiel,  final String tipoEnfermedadPiel,
-                          final String otraEnfermedadPiel, final String abastecimientoAgua, final String nombreRio, final String otroAbastecimientoAgua, final String sisternaTanque, final String origenAgua,
-                          final String tratamientoOrigenAgua, final String usoAgua, final int capacidadTanque, final int capacidadSisterna, final String frecuenciaLimpieza, final String frecuenciaCloracion,
-                          final String otroFrecuenciaCloracion, final String dosisCloracion, final String otroDosisCloracion, final int mascotas_animal, final String consumo_animal, final String venta_animal,
-                          final int ornamentales_riego, final String consumo_riego, final String venta_riego, final int status
+    private void saveName(
+            final int id,
+            final String codigo,
+            final  String fecha,
+            final String horaInicio,
+            final String horaFin,
+            final String foto,
+            final String tipoVivienda,
+            final String otroTipoVivienda,
+            final String numeroPisos,
+            final String techo ,
+            final String paredes,
+            final String piso,
+            final String vivienda,
+            final String numeroPersonas,
+            final  String problemasEstomacales,
+            final String tipoProblemasEstomacales,
+            final String otroProblemasEstomacales,
+            final String enfermedadPiel,
+            final String tipoEnfermedadPiel,
+            final String otraEnfermedadPiel,
+            final String abastecimientoAgua,
+            final String nombreRio,
+            final String otroAbastecimientoAgua,
+            final String sisternaTanque,
+            final String origenAgua,
+            final String tratamientoOrigenAgua,
+            final String usoAgua,
+            final String capacidadTanque,
+            final String capacidadSisterna,
+            final String frecuenciaLimpieza,
+            final String frecuenciaCloracion,
+            final String otroFrecuenciaCloracion,
+            final String dosisCloracion,
+            final String otroDosisCloracion,
+            final  String mascotas_animal,
+            final String consumo_animal,
+            final String venta_animal,
+            final  String ornamentales_riego,
+            final  String consumo_riego,
+            final String venta_riego,
+            final int status) {
 
-
-
-
-
-    ) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity1.URL_SAVE_NAME,
                 new Response.Listener<String>() {
                     @Override
@@ -142,16 +171,16 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                 params.put("foto", foto);
                 params.put("tipoVivienda",tipoVivienda );
                 params.put("otroTipoVivienda", otroTipoVivienda);
-                params.put("numeroPisos",String.valueOf(numeroPisos));
+                params.put("numeroPisos",numeroPisos);
                 params.put("techo",techo);
                 params.put("paredes",paredes );
                 params.put("piso",piso );
                 params.put("vivienda",vivienda);
                 params.put("numeroPersonas",numeroPersonas);
-                params.put("problemasEstomacales",String.valueOf(problemasEstomacales));
+                params.put("problemasEstomacales",problemasEstomacales);
                 params.put("tipoProblemasEstomacales",tipoProblemasEstomacales);
                 params.put("otroProblemasEstomacales",otroProblemasEstomacales);
-                params.put("enfermedadPiel",String.valueOf(enfermedadPiel));
+                params.put("enfermedadPiel",enfermedadPiel);
                 params.put("tipoEnfermedadPiel",tipoEnfermedadPiel );
                 params.put("otraEnfermedadPiel",otraEnfermedadPiel );
                 params.put("abastecimientoAgua",abastecimientoAgua );
@@ -161,17 +190,17 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                 params.put("origenAgua",origenAgua );
                 params.put("tratamientoOrigenAgua",tratamientoOrigenAgua);
                 params.put("usoAgua",usoAgua );
-                params.put("capacidadTanque",String.valueOf(capacidadTanque));
-                params.put("capacidadSisterna",String.valueOf(capacidadSisterna));
+                params.put("capacidadTanque",capacidadTanque);
+                params.put("capacidadSisterna",capacidadSisterna);
                 params.put("frecuenciaLimpieza",frecuenciaLimpieza);
                 params.put("frecuenciaCloracion",frecuenciaCloracion);
                 params.put("otroFrecuenciaCloracion",otroFrecuenciaCloracion);
                 params.put("dosisCloracion",dosisCloracion);
                 params.put("otroDosisCloracion",otroDosisCloracion);
-                params.put("mascotas_animal",String.valueOf(mascotas_animal));
+                params.put("mascotas_animal",mascotas_animal);
                 params.put("consumo_animal",consumo_animal );
                 params.put("venta_animal",venta_animal );
-                params.put("ornamentales_riego",String.valueOf(ornamentales_riego));
+                params.put("ornamentales_riego",ornamentales_riego);
                 params.put("consumo_riego",consumo_riego );
                 params.put("venta_riego",venta_riego );
 

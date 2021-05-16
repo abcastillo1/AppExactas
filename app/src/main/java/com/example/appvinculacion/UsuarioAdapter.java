@@ -113,7 +113,7 @@ public class UsuarioAdapter {
             + c_CODIGO + " VARCHAR, "
             + c_CODIGO_PERSONA +" VARCHAR, "
             + c_FECHA + " VARCHAR, "
-            + c_NUM +" VARCHAR , "//int
+            + c_NUM +" VARCHAR, "//int
             + c_HORAINICIO + " VARCHAR, "
             + c_HORAFIN + " VARCHAR, "
             + c_FOTO + " VARCHAR, "
@@ -284,7 +284,7 @@ public class UsuarioAdapter {
 
     //METODOS AGREGADOS DE LA ENCUESTA1
 
-    public long addName1(String codigo, String fecha, String horaInicio, String horaFin, String Foto,
+    public void addName1(String codigo, String fecha, String horaInicio, String horaFin, String Foto,
                          String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, String numeroPersonas,
                          String problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, String enfermedadPiel,  String tipoEnfermedadPiel,
                          String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
@@ -293,8 +293,9 @@ public class UsuarioAdapter {
                          String ornamentales_riego, String consumo_riego, String venta_riego, int status) {
 
 
-
+        SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
 
         contentValues.put(c_CODIGO, codigo);
         contentValues.put(c_FECHA, fecha);
@@ -337,10 +338,10 @@ public class UsuarioAdapter {
         contentValues.put(c_VENTARIEGO, venta_riego);
         contentValues.put(c_ESTADO, status);
 
+        db.insert(TABLE_NAME1, null, contentValues);
+        db.close();
 
-        long id=database.insert(TABLE_NAME1, null, contentValues);
-        database.close();
-        return id;
+
     }
     public boolean updateNameStatus1(int id, int status) {
         SQLiteDatabase db = helper.getWritableDatabase();

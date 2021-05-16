@@ -20,14 +20,14 @@ public class MainActivity2 extends AppCompatActivity {
 
     private UsuarioAdapter db;
     //View objects
-    private Button buttonSave;
+
     private ListView listViewNames;
     private List<Name2> names;
     private BroadcastReceiver broadcastReceiver;
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter2 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta2.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.9/sincronizar/encuesta2.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
     @Override
@@ -40,7 +40,7 @@ public class MainActivity2 extends AppCompatActivity {
         db = new UsuarioAdapter(this);
         names = new ArrayList<>();
 
-        buttonSave = (Button) findViewById(R.id.buttonSave);
+
         listViewNames = (ListView) findViewById(R.id.listViewNames);
 
         //adding click listener to button
