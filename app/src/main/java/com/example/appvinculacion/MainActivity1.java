@@ -25,7 +25,7 @@ public class MainActivity1 extends AppCompatActivity {
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter1 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.9/sincronizar/encuesta1.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.10/sincronizar/encuesta1.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
     @Override

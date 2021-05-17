@@ -200,7 +200,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter1 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.9/sincronizar/encuesta1.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.10/sincronizar/encuesta1.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -216,12 +216,10 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
         init();
-        profileIv=findViewById(R.id.profileIv);
-        TituloFecha = (TextView) findViewById(R.id.TituloFecha);
-        HoraInicio= (TextView) findViewById(R.id.HoraInicio);
-        latitud = (TextView) findViewById(R.id.txtLatitud);
-        longitud = (TextView) findViewById(R.id.txtLongitud);
-        direccion = (TextView) findViewById(R.id.txtDireccion);
+
+
+
+        fechayhora();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
         } else {
@@ -571,6 +569,13 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
         seccion2= (Button) findViewById(R.id.seccion2);
 
+
+        profileIv=findViewById(R.id.profileIv);
+        TituloFecha = (TextView) findViewById(R.id.TituloFecha);
+        HoraInicio= (TextView) findViewById(R.id.HoraInicio);
+        latitud = (TextView) findViewById(R.id.txtLatitud);
+        longitud = (TextView) findViewById(R.id.txtLongitud);
+        direccion = (TextView) findViewById(R.id.txtDireccion);
 
 
         //Si da en otros se mostrará una caja de texto
@@ -1312,6 +1317,18 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    public void fechayhora() {
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+
+        String fecha = formatoFecha.format(date);
+        String Hora = formatoHora.format(date);
+        TituloFecha.setText(fecha);
+        HoraInicio.setText(Hora);
+    }
+
     public String horaFinal() {
 
         SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
@@ -1343,16 +1360,50 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
 
-    private void saveNameToLocalStorage(String codigo, String fecha, String horaInicio, String horaFin, String foto,
-                                        String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, String numeroPersonas,
-                                        String problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, String enfermedadPiel,  String tipoEnfermedadPiel,
-                                        String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
-                                        String tratamientoOrigenAgua, String usoAgua, String capacidadTanque, String capacidadSisterna, String frecuenciaLimpieza, String frecuenciaCloracion,
-                                        String otroFrecuenciaCloracion, String dosisCloracion, String otroDosisCloracion, String mascotas_animal, String consumo_animal, String venta_animal,
-                                        String ornamentales_riego, String consumo_riego, String venta_riego, int status) {
-        //editTextCode.setText("");
-        // editTextName.setText("");
-        db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+    private void saveNameToLocalStorage(String codigo,
+                                        String codigo_persona,
+                                        String num,
+                                        String fecha,
+                                        String horaInicio,
+                                        String horaFin,
+                                        String foto,
+                                        String tipoVivienda,
+                                        String otroTipoVivienda,
+                                        String numeroPisos,
+                                        String techo,
+                                        String paredes,
+                                        String piso,
+                                        String vivienda,
+                                        String numeroPersonas,
+                                        String problemasEstomacales,
+                                        String tipoProblemasEstomacales,
+                                        String otroProblemasEstomacales,
+                                        String enfermedadPiel,
+                                        String tipoEnfermedadPiel,
+                                        String otraEnfermedadPiel,
+                                        String abastecimientoAgua,
+                                        String nombreRio,
+                                        String otroAbastecimientoAgua,
+                                        String sisternaTanque,
+                                        String origenAgua,
+                                        String tratamientoOrigenAgua,
+                                        String usoAgua,
+                                        String capacidadTanque,
+                                        String capacidadSisterna,
+                                        String frecuenciaLimpieza,
+                                        String frecuenciaCloracion,
+                                        String otroFrecuenciaCloracion,
+                                        String dosisCloracion,
+                                        String otroDosisCloracion,
+                                        String mascotas_animal,
+                                        String consumo_animal,
+                                        String venta_animal,
+                                        String ornamentales_riego,
+                                        String consumo_riego,
+                                        String venta_riego,
+                                        int status) {
+
+        db.addName1(codigo,codigo_persona,num, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1381,7 +1432,8 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         final String horaInicio = HoraInicio.getText().toString().trim();
         final String horaFin = this.horaFinal();
         final String foto ="imageUri";
-
+        final String codigo_persona="codigo_persona";
+        final String num ="num";
 
         final String tipoVivienda=this.pregunta1();
         final String otroTipoVivienda=campo_otros.getText().toString().trim();
@@ -1432,15 +1484,53 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                             JSONObject obj1 = new JSONObject(response);
                             if (!obj1.getBoolean("error")) {
 
-                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
-                                        numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
-                                        otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
-                                        usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
-                                        otroDosisCloracion, mascotas_animal, consumo_animal, venta_animal, ornamentales_riego, consumo_riego, venta_riego, NAME_SYNCED_WITH_SERVER);
+                                saveNameToLocalStorage(
+                                        codigo,
+                                        codigo_persona,
+                                        num,
+                                        fecha,
+                                        horaInicio,
+                                        horaFin,
+                                        foto,
+                                        tipoVivienda,
+                                        otroTipoVivienda,
+                                        numeroPisos,
+                                        techo,
+                                        paredes,
+                                        piso,
+                                        vivienda,
+                                        numeroPersonas,
+                                        problemasEstomacales,
+                                        tipoProblemasEstomacales,
+                                        otroProblemasEstomacales,
+                                        enfermedadPiel,
+                                        tipoEnfermedadPiel,
+                                        otraEnfermedadPiel,
+                                        abastecimientoAgua,
+                                        nombreRio,
+                                        otroAbastecimientoAgua,
+                                        sisternaTanque,
+                                        origenAgua,
+                                        tratamientoOrigenAgua,
+                                        usoAgua,
+                                        capacidadTanque,
+                                        capacidadSisterna,
+                                        frecuenciaLimpieza,
+                                        frecuenciaCloracion,
+                                        otroFrecuenciaCloracion,
+                                        dosisCloracion,
+                                        otroDosisCloracion,
+                                        mascotas_animal,
+                                        consumo_animal,
+                                        venta_animal,
+                                        ornamentales_riego,
+                                        consumo_riego,
+                                        venta_riego,
+                                        NAME_SYNCED_WITH_SERVER);
                             } else {
                                 // si hay algun error
                                 // guardando el nombre en sqlite con estado no sincronizado
-                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                                saveNameToLocalStorage(codigo,codigo_persona,num, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                                         numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                         otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                         usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1456,7 +1546,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
-                        saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                        saveNameToLocalStorage(codigo,codigo_persona,num, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1467,6 +1557,8 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("codigo", codigo);
+                params.put("codigo_persona", codigo_persona);
+                params.put("num", num);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
                 params.put("horaFin", horaFin);

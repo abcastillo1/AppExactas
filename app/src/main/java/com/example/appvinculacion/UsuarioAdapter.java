@@ -93,7 +93,7 @@ public class UsuarioAdapter {
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             + c_CODIGO + " VARCHAR, "
-            + c_NOMBRE + " TEXT, "
+            + c_NOMBRE + " VARCHAR, "
             + c_ESTADO + " TINYINT);";
 
 
@@ -284,7 +284,7 @@ public class UsuarioAdapter {
 
     //METODOS AGREGADOS DE LA ENCUESTA1
 
-    public void addName1(String codigo, String fecha, String horaInicio, String horaFin, String Foto,
+    public void addName1(String codigo,String codigo_persona,String numero, String fecha, String horaInicio, String horaFin, String Foto,
                          String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, String numeroPersonas,
                          String problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, String enfermedadPiel,  String tipoEnfermedadPiel,
                          String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
@@ -297,7 +297,9 @@ public class UsuarioAdapter {
         ContentValues contentValues = new ContentValues();
 
 
-        contentValues.put(c_CODIGO, codigo);
+        contentValues.put(c_CODIGO, numero);
+        contentValues.put(c_CODIGO_PERSONA, codigo_persona);//
+        contentValues.put(c_NUM, codigo);//
         contentValues.put(c_FECHA, fecha);
         contentValues.put(c_HORAINICIO, horaInicio);
         contentValues.put(c_HORAFIN, horaFin);
