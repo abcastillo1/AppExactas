@@ -200,7 +200,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter1 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.10/sincronizar/encuesta1.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta1.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -209,6 +209,9 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_encuesta);
+        //matrices de permisos de inicio
+        cameraPermissions=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         registerReceiver(new NetworkStateChecker1(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         db = new UsuarioAdapter(this);
@@ -240,9 +243,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         //registering the broadcast receiver to update sync status
         registerReceiver(broadcastReceiver, new IntentFilter(DATA_SAVED_BROADCAST));
 
-        //matrices de permisos de inicio
-        cameraPermissions=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 
 
 
@@ -1361,8 +1362,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
     private void saveNameToLocalStorage(String codigo,
-                                        String codigo_persona,
-                                        String num,
+
                                         String fecha,
                                         String horaInicio,
                                         String horaFin,
@@ -1403,7 +1403,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                         String venta_riego,
                                         int status) {
 
-        db.addName1(codigo,codigo_persona,num, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+        db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1486,8 +1486,6 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
                                 saveNameToLocalStorage(
                                         codigo,
-                                        codigo_persona,
-                                        num,
                                         fecha,
                                         horaInicio,
                                         horaFin,
@@ -1530,7 +1528,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                             } else {
                                 // si hay algun error
                                 // guardando el nombre en sqlite con estado no sincronizado
-                                saveNameToLocalStorage(codigo,codigo_persona,num, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                                         numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                         otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                         usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1546,7 +1544,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
-                        saveNameToLocalStorage(codigo,codigo_persona,num, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                        saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1557,8 +1555,6 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("codigo", codigo);
-                params.put("codigo_persona", codigo_persona);
-                params.put("num", num);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
                 params.put("horaFin", horaFin);

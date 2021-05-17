@@ -42,6 +42,8 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
 
                 //getting all the unsynced names
                 Cursor cursor = db.getUnsyncedNames2();
+
+
                 if (cursor.moveToFirst()) {
                     do {
                         //calling the method to save the unsynced name to MySQL

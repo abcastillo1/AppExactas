@@ -47,7 +47,7 @@ public class UsuarioAdapter {
     public static final String c_NUMEROPERSONAS="numeroPersonas";
     public static final String c_PROBLEMASESTOMACALES="problemasEstomacales";
     public static final String c_TIPOPROBLEMASESTOMACALES="tipoProblemasEstomacales";
-    public static final String c_OTROTIPOPROBLEMASESTOMACALES=" otroProblemasEstomacales";
+    public static final String c_OTROTIPOPROBLEMASESTOMACALES="otroProblemasEstomacales";
     public static final String c_ENFERMEDADPIEL="enfermedadPiel";
     public static final String c_TIPOENFERMEDADPIEL="tipoEnfermedadPiel";
     public static final String c_OTRAENFERMEDADPIEL="otraEnfermedadPiel";
@@ -125,15 +125,15 @@ public class UsuarioAdapter {
             + c_PISO + " VARCHAR, "
             + c_VIVIENDA + " VARCHAR, "
             + c_NUMEROPERSONAS + " VARCHAR, "
-            + c_PROBLEMASESTOMACALES + " VARCHAR, "//int
+            + c_PROBLEMASESTOMACALES + " VARCHAR, "
             + c_TIPOPROBLEMASESTOMACALES + " VARCHAR, "
             + c_OTROTIPOPROBLEMASESTOMACALES + " VARCHAR, "
-            + c_ENFERMEDADPIEL + " VARCHAR, "//int
+            + c_ENFERMEDADPIEL + " VARCHAR, "
             + c_TIPOENFERMEDADPIEL + " VARCHAR, "
             + c_OTRAENFERMEDADPIEL + " VARCHAR, "
             + c_ABASTECIMIENTOAGUA + " VARCHAR, "
             + c_NOMBRERIO + " VARCHAR, "
-            +  c_OTROABASTECIMIENTOAGUA + " VARCHAR, "
+            + c_OTROABASTECIMIENTOAGUA + " VARCHAR, "
             + c_SISTERNATANQUE + " VARCHAR, "
             + c_ORIGENAGUA + " VARCHAR, "
             + c_TRATAMIENTOORIGENAGUA + " VARCHAR, "
@@ -152,6 +152,9 @@ public class UsuarioAdapter {
             + c_CONSUMORIEGO + " VARCHAR, "
             + c_VENTARIEGO + " VARCHAR, "
             + c_ESTADO + " TINYINT);";
+
+
+
 
 
     private static SQLiteDatabase database;
@@ -284,7 +287,7 @@ public class UsuarioAdapter {
 
     //METODOS AGREGADOS DE LA ENCUESTA1
 
-    public void addName1(String codigo,String codigo_persona,String numero, String fecha, String horaInicio, String horaFin, String Foto,
+    public void addName1(String codigo, String fecha, String horaInicio, String horaFin, String Foto,
                          String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, String numeroPersonas,
                          String problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, String enfermedadPiel,  String tipoEnfermedadPiel,
                          String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
@@ -297,9 +300,7 @@ public class UsuarioAdapter {
         ContentValues contentValues = new ContentValues();
 
 
-        contentValues.put(c_CODIGO, numero);
-        contentValues.put(c_CODIGO_PERSONA, codigo_persona);//
-        contentValues.put(c_NUM, codigo);//
+        contentValues.put(c_CODIGO, codigo);
         contentValues.put(c_FECHA, fecha);
         contentValues.put(c_HORAINICIO, horaInicio);
         contentValues.put(c_HORAFIN, horaFin);

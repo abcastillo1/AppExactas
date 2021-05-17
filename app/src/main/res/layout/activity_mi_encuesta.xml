@@ -52,6 +52,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/nos"
                 android:textSize="10dp"
+                android:visibility="gone"
                 />
             <TextView
                 android:id="@+id/HoraInicio"
@@ -65,7 +66,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/nos"
                 android:textSize="10dp"
-
+                android:visibility="gone"
                 />
 
             <TextView

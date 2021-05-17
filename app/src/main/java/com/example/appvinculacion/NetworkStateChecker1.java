@@ -50,8 +50,6 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                         saveName(
                                 cursor.getInt(cursor.getColumnIndex(db.COLUMN_ID)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_CODIGO_PERSONA)),
-                                cursor.getString(cursor.getColumnIndex(db.c_NUM)),
                                 cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
@@ -89,8 +87,7 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                                 cursor.getString(cursor.getColumnIndex(db.c_VENTAANIMAL)),
                                 cursor.getString(cursor.getColumnIndex(db.c_ORNAMENTALESRIEGO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CONSUMORIEGO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_VENTARIEGO)),
-                                cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
+                                cursor.getString(cursor.getColumnIndex(db.c_VENTARIEGO))
 
                         );
                     } while (cursor.moveToNext());
@@ -102,8 +99,6 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
     private void saveName(
             final int id,
             final String codigo,
-            final String codigo_persona,
-            final String num,
             final String fecha,
             final String horaInicio,
             final String horaFin,
@@ -116,7 +111,7 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
             final String piso,
             final String vivienda,
             final String numeroPersonas,
-            final  String problemasEstomacales,
+            final String problemasEstomacales,
             final String tipoProblemasEstomacales,
             final String otroProblemasEstomacales,
             final String enfermedadPiel,
@@ -141,8 +136,8 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
             final String venta_animal,
             final  String ornamentales_riego,
             final  String consumo_riego,
-            final String venta_riego,
-            final int status) {
+            final String venta_riego
+            ) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity1.URL_SAVE_NAME,
                 new Response.Listener<String>() {
@@ -170,20 +165,13 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
-
-
-
-
                 Map<String, String> params = new HashMap<>();
-                params.put("codigo", codigo);
-                params.put("codigo_persona", codigo_persona);
-                params.put("num", num);
-                params.put("fecha", fecha);
-                params.put("horaInicio", horaInicio);
+                params.put("codigo",codigo);
+                params.put("fecha",fecha);
+                params.put("horaInicio",horaInicio);
                 params.put("horaFin",horaFin);
                 params.put("foto",foto);
-                params.put("tipoVivienda", tipoVivienda);
+                params.put("tipoVivienda",tipoVivienda);
                 params.put("otroTipoVivienda",otroTipoVivienda);
                 params.put("numeroPisos",numeroPisos);
                 params.put("techo",techo);
@@ -209,8 +197,6 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                 params.put("frecuenciaLimpieza",frecuenciaLimpieza);
                 params.put("frecuenciaCloracion",frecuenciaCloracion);
                 params.put("otroFrecuenciaCloracion",otroFrecuenciaCloracion);
-
-
                 params.put("dosisCloracion",dosisCloracion);
                 params.put("otroDosisCloracion",otroDosisCloracion);
                 params.put("mascotas_animal",mascotas_animal);
