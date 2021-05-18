@@ -48,7 +48,7 @@ public class NameAdapter3 extends ArrayAdapter<Name3> {
         //setting the name to textview
 
         //textViewCode.setText(""+name.getCodigo());
-        textViewName.setText(""+name.getSexo());
+        textViewName.setText(""+name.getNombre());
         //textViewDir.setText(""+name.getDir());
        // textViewSexo.setText(""+name.getSexo());
         //textViewEdad.setText(""+name.getEdad());

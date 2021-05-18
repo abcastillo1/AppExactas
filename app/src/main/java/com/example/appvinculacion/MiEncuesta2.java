@@ -17,6 +17,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.location.Address;
@@ -34,6 +35,8 @@ import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -73,6 +76,11 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     private CheckBox check_turbia,check_solidos,check_coloracion,check_olor;
 
     private Spinner comboPersonas;
+    private TextView txtNombre,txtDir,txtCodigo;
+    ArrayList<String> listaPersonas;
+    ArrayList<Name3> personasList;
+    MyDbHelper conn;
+
     //ArrayList<String>
 
     private EditText etHora,texto_diagnostico;
@@ -146,7 +154,38 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         buttonSave = (Button) findViewById(R.id.buttonSave);
         TituloFecha = (TextView) findViewById(R.id.TituloFecha);
         HoraInicio = (TextView) findViewById(R.id.HoraInicio);
+
+        conn=new MyDbHelper(getApplicationContext(),UsuarioAdapter.DB_NAME,null,1);
         comboPersonas=(Spinner) findViewById(R.id.comboPersonas);
+        txtNombre=(TextView) findViewById(R.id.txtNombre);
+        txtDir=(TextView) findViewById(R.id.txtDir);
+        txtCodigo=(TextView) findViewById(R.id.txtCodigo);
+
+        consultarListaPersonas();
+        ArrayAdapter<CharSequence> adaptador=new ArrayAdapter(this,R.layout.simple_spinner_personas,listaPersonas);
+        comboPersonas.setAdapter(adaptador);
+
+        comboPersonas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position!=0){
+                    txtCodigo.setText(personasList.get(position-1).getCodigo().toString());
+                    txtNombre.setText(personasList.get(position-1).getNombre().toString());
+                    txtDir.setText(personasList.get(position-1).getDir().toString());
+                }else{
+                    txtCodigo.setText("");
+                    txtNombre.setText("");
+                    txtDir.setText("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
 
         profileIv=findViewById(R.id.profileIv);
@@ -174,6 +213,33 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         registerReceiver(broadcastReceiver, new IntentFilter(DATA_SAVED_BROADCAST));
 
 
+
+    }
+
+    private void consultarListaPersonas() {
+        SQLiteDatabase db = conn.getReadableDatabase();
+        Name3 persona=null;
+        personasList = new ArrayList<Name3>();
+        Cursor cursor=db.rawQuery("SELECT * FROM "+UsuarioAdapter.TABLE_NAME3,null);
+        while (cursor.moveToNext()){
+          persona=new Name3();
+          persona.setCodigo(cursor.getString(1));
+          persona.setNombre(cursor.getString(2));
+          persona.setDir(cursor.getString(3));
+
+          personasList.add(persona);
+        }
+        obtenerLista();
+    }
+
+    private void obtenerLista() {
+        listaPersonas=new ArrayList<>();
+        listaPersonas.add("Seleccione un nombre");
+
+        for(int i=0;i<personasList.size();i++){
+            listaPersonas.add(i+" - "+personasList.get(i).getNombre());
+
+        }
 
     }
 

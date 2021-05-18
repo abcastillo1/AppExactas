@@ -7,6 +7,7 @@ import android.os.Bundle;
 public class Name3 {
 
     private String codigo;
+    private String codigo_persona;
     private String nombre;
     private String dir;
     private String sexo;
@@ -14,6 +15,9 @@ public class Name3 {
     private String lon;
     private String lat;
     private int estado;
+
+    public Name3() {
+    }
 
     public Name3(String codigo, String nombre, String dir, String sexo, String edad, String lon, String lat, int estado) {
         this.codigo = codigo;
@@ -33,6 +37,8 @@ public class Name3 {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+
 
     public String getNombre() {
         return nombre;
@@ -90,3 +96,4 @@ public class Name3 {
         this.estado = estado;
     }
 }
+

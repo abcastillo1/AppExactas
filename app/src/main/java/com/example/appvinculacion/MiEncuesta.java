@@ -1633,7 +1633,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
                 params.put("codigo", codigo);
-                params.put("codigo_per",codigo_persona);
+                params.put("codigo",codigo_persona);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
                 params.put("horaFin", horaFin);
