@@ -293,7 +293,7 @@ public class UsuarioAdapter {
 
     //METODOS AGREGADOS DE LA ENCUESTA1
 
-    public void addName1(String codigo, String fecha, String horaInicio, String horaFin, String Foto,
+    public void addName1(String codigo,String codigo_per, String fecha, String horaInicio, String horaFin, String Foto,
                          String tipoVivienda, String otroTipoVivienda,  String numeroPisos, String techo , String paredes, String piso, String vivienda, String numeroPersonas,
                          String problemasEstomacales,  String tipoProblemasEstomacales, String otroProblemasEstomacales, String enfermedadPiel,  String tipoEnfermedadPiel,
                          String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
@@ -308,6 +308,7 @@ public class UsuarioAdapter {
 
 
         contentValues.put(c_CODIGO, codigo);
+        contentValues.put(c_CODIGO_PERSONA, codigo_per);
         contentValues.put(c_FECHA, fecha);
         contentValues.put(c_HORAINICIO, horaInicio);
         contentValues.put(c_HORAFIN, horaFin);

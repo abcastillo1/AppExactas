@@ -103,7 +103,7 @@ public class NetworkStateChecker3 extends BroadcastReceiver {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("codigo_persona",codigo_persona );
-                params.put("nombre_persona,",nombre_persona );
+                params.put("nombre_persona",nombre_persona );
                 params.put("dir_persona",dir_persona );
                 params.put("edad_persona",edad_persona );
                 params.put("sexo_persona",sexo_persona );

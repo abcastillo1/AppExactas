@@ -535,6 +535,22 @@
                 android:background="#5CEAEAEA"
                 android:orientation="vertical"
                 android:padding="25dp">
+                <TextView
+                    android:id="@+id/encuestado_codigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="#DCDADA"
+                    android:hint=""
+                    android:inputType="textPersonName|textCapWords"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gris"
+                    android:textSize="17dp"
+                    />
+
 
                 <EditText
                     android:id="@+id/encuestado_nombre"
@@ -545,6 +561,7 @@
                     android:layout_marginEnd="15dp"
                     android:background="#DCDADA"
                     android:hint="Nombres"
+                    android:layout_below="@+id/encuestado_codigo"
                     android:inputType="textPersonName|textCapWords"
                     android:padding="5dp"
                     android:textColor="@color/black"

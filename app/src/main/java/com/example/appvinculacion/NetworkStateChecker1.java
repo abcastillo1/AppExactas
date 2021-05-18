@@ -51,6 +51,7 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                         saveName(
                                 cursor.getInt(cursor.getColumnIndex(db.COLUMN_ID)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
+                                cursor.getString(cursor.getColumnIndex(db.c_CODIGO_PERSONA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
@@ -101,6 +102,7 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
     private void saveName(
             final int id,
             final String codigo,
+            final String codigo_per,
             final String fecha,
             final String horaInicio,
             final String horaFin,
@@ -172,6 +174,7 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("codigo",codigo);
+                params.put("codigo_per",codigo_per);
                 params.put("fecha",fecha);
                 params.put("horaInicio",horaInicio);
                 params.put("horaFin",horaFin);

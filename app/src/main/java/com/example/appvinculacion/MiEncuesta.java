@@ -80,6 +80,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     private CheckBox check_madera1,check_hormigon1,check_porcelanato,check_tierra;//p5
 
     //DATOS DEL ENCUESTADO
+    private TextView encuestado_codigo;
     private EditText encuestado_nombre,encuestado_direccion,encuestado_edad;
     private CheckBox check_hombre,check_mujer;
 
@@ -231,7 +232,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         init();
 
 
-
+        generarCodigo();
         fechayhora();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
@@ -389,6 +390,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
     public void init(){
 
+
         check_casa = (CheckBox) findViewById(R.id.check_casa);
         check_departamento = (CheckBox) findViewById(R.id.check_departamento);
         check_cuarto = (CheckBox) findViewById(R.id.check_cuarto);
@@ -415,6 +417,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         check_porcelanato=(CheckBox) findViewById(R.id.check_porcelanato);
         check_tierra=(CheckBox) findViewById(R.id.check_tierra);
 
+        encuestado_codigo=(TextView) findViewById(R.id.encuestado_codigo);
         encuestado_nombre=(EditText) findViewById(R.id.encuestado_nombre);
         encuestado_direccion=(EditText) findViewById(R.id.encuestado_direccion);
         encuestado_edad=(EditText) findViewById(R.id.encuestado_edad);
@@ -865,6 +868,16 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
     }
+    public void generarCodigo(){
+        double numero = 1000000 * Math.random();
+        double numero2 = (int) (Math.random() * 9) + 1;
+        int f1= Integer.valueOf((int) numero);
+        int f2=Integer.valueOf((int) numero2);
+
+        String codigo=f1+""+f2;
+        encuestado_codigo.setText(codigo);
+    }
+
     public String pregunta_nombre(){
         String nombreencuestado=encuestado_nombre.getText().toString().trim();
         return nombreencuestado;
@@ -1397,7 +1410,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
     private void saveNameToLocalStorage(String codigo,
-
+                                         String codigo_per,
                                          String fecha,
                                          String horaInicio,
                                          String horaFin,
@@ -1439,7 +1452,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                          int status
                                          ) {
 
-        db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+        db.addName1(codigo,codigo_per, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1453,6 +1466,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         //refreshList();
 
     }
+
 
 
     private void saveNameToLocalStorage3(String codigo_persona,
@@ -1523,7 +1537,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         final String venta_riego=text_sembrios_venta.getText().toString().trim();
 
 
-        final String codigo_persona=9+""+8;
+        final String codigo_persona=encuestado_codigo.getText().toString().trim();
 
 
 
@@ -1543,6 +1557,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
                                 saveNameToLocalStorage(
                                         codigo,
+                                        codigo_persona,
                                         fecha,
                                         horaInicio,
                                         horaFin,
@@ -1587,7 +1602,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                             } else {
                                 // si hay algun error
                                 // guardando el nombre en sqlite con estado no sincronizado
-                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                                saveNameToLocalStorage(codigo, codigo_persona, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                                         numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                         otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                         usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1604,7 +1619,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
-                        saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
+                        saveNameToLocalStorage(codigo, codigo_persona, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
@@ -1618,6 +1633,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
                 params.put("codigo", codigo);
+                params.put("codigo_per",codigo_persona);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
                 params.put("horaFin", horaFin);
@@ -1678,7 +1694,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
 
-        final String codigo_persona=9+""+8;
+        final String codigo_persona=encuestado_codigo.getText().toString().trim();
         final String nombre_persona=pregunta_nombre();
         final String dir_persona=pregunta_direccion();
         final String edad_persona=pregunta_edad();
