@@ -17,6 +17,7 @@ public class UsuarioAdapter {
 
     public static final String TABLE_NAME1 = "encuesta1";
     public static final String TABLE_NAME2 = "encuesta2";
+    public static final String TABLE_NAME3 = "persona";
 
 
     //nombre de la tabla
@@ -24,6 +25,10 @@ public class UsuarioAdapter {
     public static final String c_NOMBRE="nombre";
     public static final String c_CODIGO="codigo";
     public static final String c_ESTADO="estado";
+    public static final String c_DIRECCION="direccion";
+    public static final String c_EDAD="edad";
+    public static final String c_SEXO="sexo";
+
 
 
     public static final String c_FECHA="fecha";
@@ -33,10 +38,8 @@ public class UsuarioAdapter {
     public static final String c_UTM_LO="Longitud";
     public static final String c_UTM_LA="Latitud";
 
-
     public static final String c_CODIGO_PERSONA="codigo_persona";
     public static final String c_NUM="numero";
-
     public static final String c_TIPOVIVIENDA="tipoVivienda";
     public static final String c_OTROTIPOVIVIENDA="otroTipoVivienda";
     public static final String c_NUMEROPISOS="numeroPisos";
@@ -58,19 +61,15 @@ public class UsuarioAdapter {
     public static final String c_ORIGENAGUA="origenAgua";
     public static final String c_TRATAMIENTOORIGENAGUA="tratamientoOrigenAgua";
     public static final String c_USOAGUA="usoAgua";
-
     //TABLA capacidadsisternatanque
     public static final String c_CAPACIDADTANQUE="capacidadTanque";
     public static final String c_CAPACIDADSISTERNA="capacidadSisterna";
-
     //TABLA cloracionlimpieza
     public static final String c_FRECUENCIALIMPIEZA="frecuenciaLimpieza";
     public static final String c_FRECUENCIACLORACION="frecuenciaCloracion";
     public static final String c_OTROFRECUENCIACLORACION="otroFrecuenciaCloracion";
     public static final String c_DOSISCLORACION="dosisCloracion";
     public static final String c_OTRODOSISCLORACION="otroDosisCloracion";
-
-
     //TABLA aguaanimalesriego
     public static final String c_MASCOTASANIMAL="mascotas_animal";
     public static final String c_CONSUMOSANIMAL="consumo_animal";
@@ -78,8 +77,6 @@ public class UsuarioAdapter {
     public static final String c_ORNAMENTALESRIEGO="ornamentales_riego";
     public static final String c_CONSUMORIEGO="consumo_riego";
     public static final String c_VENTARIEGO="venta_riego";
-
-
   //nombre_pers,direccion_pers,edad_pers,sexo_pers,latitud_pers,longitud_pers
 
 
@@ -91,7 +88,7 @@ public class UsuarioAdapter {
 
 
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
-            + COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + c_CODIGO + " VARCHAR, "
             + c_NOMBRE + " VARCHAR, "
             + c_ESTADO + " TINYINT);";
@@ -153,7 +150,16 @@ public class UsuarioAdapter {
             + c_VENTARIEGO + " VARCHAR, "
             + c_ESTADO + " TINYINT);";
 
-
+    public static final String CREATE_TABLE3 = "CREATE TABLE " + TABLE_NAME3 + " ("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + c_CODIGO + " VARCHAR, "
+            + c_NOMBRE + " VARCHAR, "
+            + c_DIRECCION + " VARCHAR, "
+            + c_EDAD + " VARCHAR, "
+            + c_SEXO + " VARCHAR, "
+            + c_UTM_LO + " VARCHAR, "
+            + c_UTM_LA + " VARCHAR, "
+            + c_ESTADO + " TINYINT);";
 
 
 
@@ -293,11 +299,12 @@ public class UsuarioAdapter {
                          String otraEnfermedadPiel, String abastecimientoAgua, String nombreRio, String otroAbastecimientoAgua, String sisternaTanque, String origenAgua,
                          String tratamientoOrigenAgua, String usoAgua, String capacidadTanque, String capacidadSisterna, String frecuenciaLimpieza, String frecuenciaCloracion,
                          String otroFrecuenciaCloracion, String dosisCloracion, String otroDosisCloracion, String mascotas_animal, String consumo_animal, String venta_animal,
-                         String ornamentales_riego, String consumo_riego, String venta_riego, int status) {
+                         String ornamentales_riego, String consumo_riego, String venta_riego, int status ) {
 
 
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
 
 
         contentValues.put(c_CODIGO, codigo);
@@ -341,7 +348,12 @@ public class UsuarioAdapter {
         contentValues.put(c_VENTARIEGO, venta_riego);
         contentValues.put(c_ESTADO, status);
 
+
+
+
+
         db.insert(TABLE_NAME1, null, contentValues);
+
         db.close();
 
 
@@ -349,11 +361,15 @@ public class UsuarioAdapter {
     public boolean updateNameStatus1(int id, int status) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+
         contentValues.put(c_ESTADO, status);
+
         db.update(TABLE_NAME1, contentValues, COLUMN_ID + "=" + id, null);
+
         db.close();
         return true;
     }
+
     public Cursor getNames1() {
         SQLiteDatabase db = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + TABLE_NAME1 + " ORDER BY " + COLUMN_ID + " ASC;";
@@ -366,6 +382,54 @@ public class UsuarioAdapter {
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
+
+
+
+    //persona
+
+    public void addName3(String codigo_persona,String nombre_persona,String dir_persona,
+                         String edad_persona,String sexo_persona,String longitud_persona,String latitud_persona,int status_persona
+    ) {
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(c_CODIGO, codigo_persona);
+        contentValues.put(c_NOMBRE, nombre_persona);
+        contentValues.put(c_DIRECCION, dir_persona);
+        contentValues.put(c_EDAD, edad_persona);
+        contentValues.put(c_SEXO, sexo_persona);
+        contentValues.put(c_UTM_LO, longitud_persona);
+        contentValues.put(c_UTM_LA,latitud_persona);
+        contentValues.put(c_ESTADO, status_persona);
+
+        db.insert(TABLE_NAME3, null, contentValues);
+        db.close();
+    }
+
+    public boolean updateNameStatus3(int id, int status) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(c_ESTADO, status);
+        db.update(TABLE_NAME3, contentValues, COLUMN_ID + "=" + id, null);
+        db.close();
+        return true;
+    }
+
+    public Cursor getUnsyncedNames3() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME3 + " WHERE " + c_ESTADO + " = 0;";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+
+    public Cursor getNames3() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME3 + " ORDER BY " + COLUMN_ID + " ASC;";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+
 
 
 }

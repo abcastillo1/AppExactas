@@ -39,6 +39,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -70,6 +71,10 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
     private CheckBox check_cisterna,check_tanque,check_pozo,check_rio;
     private CheckBox check_turbia,check_solidos,check_coloracion,check_olor;
+
+    private Spinner comboPersonas;
+    //ArrayList<String>
+
     private EditText etHora,texto_diagnostico;
 
 
@@ -120,7 +125,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter2 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta2.php";
+    public static final String URL_SAVE_NAME = "http://192.168.1.7/sincronizar/encuesta2.php";
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -141,6 +146,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         buttonSave = (Button) findViewById(R.id.buttonSave);
         TituloFecha = (TextView) findViewById(R.id.TituloFecha);
         HoraInicio = (TextView) findViewById(R.id.HoraInicio);
+        comboPersonas=(Spinner) findViewById(R.id.comboPersonas);
 
 
         profileIv=findViewById(R.id.profileIv);

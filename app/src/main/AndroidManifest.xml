@@ -20,7 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppVinculacion.NoActionBar"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".Name1"></activity>
+        <activity android:name=".Name3"></activity>
+        <activity android:name=".MainActivity3" />
+        <activity android:name=".Name1" />
         <activity android:name=".MainActivity1" />
         <activity android:name=".MenuRegistros" />
         <activity android:name=".MainActivity2" />

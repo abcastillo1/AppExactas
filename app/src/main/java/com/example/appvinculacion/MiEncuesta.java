@@ -196,11 +196,19 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
     private Button buttonSave;
     private ListView listViewNames;
     private List<Name1> names;
+    private ListView listViewNames3;
+    private List<Name3> names3;
+
+
     private BroadcastReceiver broadcastReceiver;
     public static final int NAME_SYNCED_WITH_SERVER = 1;
     public static final int NAME_NOT_SYNCED_WITH_SERVER = 0;
     private NameAdapter1 nameAdapter;
-    public static final String URL_SAVE_NAME = "http://192.168.1.8/sincronizar/encuesta1.php";
+    private NameAdapter3 nameAdapter3;
+
+    public static final String URL_SAVE_NAME = "http://192.168.1.7/sincronizar/encuesta1.php";
+    public static final String URL_SAVE_NAME3 = "http://192.168.1.7/sincronizar/persona.php";
+
     public static final String DATA_SAVED_BROADCAST = "net.simplifiedcoding.datasaved";
 
 
@@ -214,8 +222,10 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         storagePermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         registerReceiver(new NetworkStateChecker1(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(new NetworkStateChecker3(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         db = new UsuarioAdapter(this);
         names = new ArrayList<>();
+        names3 = new ArrayList<>();
 
 
         init();
@@ -233,11 +243,13 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         //init db Helper
         //dbHelper=new MyDbHelper(this);
         loadNames();
+        loadNames3();
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 //loading the names again
                 loadNames();
+                loadNames3();
             }
         };
         //registering the broadcast receiver to update sync status
@@ -1359,49 +1371,73 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    private void loadNames3() {
+        names3.clear();
+        Cursor cursor = db.getNames3();
+        if (cursor.moveToFirst()) {
+            do {
+                Name3 name = new Name3(
+                        cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_NOMBRE)),
+                        cursor.getString(cursor.getColumnIndex(db.c_DIRECCION)),
+                        cursor.getString(cursor.getColumnIndex(db.c_SEXO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_EDAD)),
+                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LO)),
+                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LA)),
+                        cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
+                );
+                names3.add(name);
+            } while (cursor.moveToNext());
+        }
+
+        nameAdapter3 = new NameAdapter3(this, R.layout.names3, names3);
+
+    }
+
 
 
     private void saveNameToLocalStorage(String codigo,
 
-                                        String fecha,
-                                        String horaInicio,
-                                        String horaFin,
-                                        String foto,
-                                        String tipoVivienda,
-                                        String otroTipoVivienda,
-                                        String numeroPisos,
-                                        String techo,
-                                        String paredes,
-                                        String piso,
-                                        String vivienda,
-                                        String numeroPersonas,
-                                        String problemasEstomacales,
-                                        String tipoProblemasEstomacales,
-                                        String otroProblemasEstomacales,
-                                        String enfermedadPiel,
-                                        String tipoEnfermedadPiel,
-                                        String otraEnfermedadPiel,
-                                        String abastecimientoAgua,
-                                        String nombreRio,
-                                        String otroAbastecimientoAgua,
-                                        String sisternaTanque,
-                                        String origenAgua,
-                                        String tratamientoOrigenAgua,
-                                        String usoAgua,
-                                        String capacidadTanque,
-                                        String capacidadSisterna,
-                                        String frecuenciaLimpieza,
-                                        String frecuenciaCloracion,
-                                        String otroFrecuenciaCloracion,
-                                        String dosisCloracion,
-                                        String otroDosisCloracion,
-                                        String mascotas_animal,
-                                        String consumo_animal,
-                                        String venta_animal,
-                                        String ornamentales_riego,
-                                        String consumo_riego,
-                                        String venta_riego,
-                                        int status) {
+                                         String fecha,
+                                         String horaInicio,
+                                         String horaFin,
+                                         String foto,
+                                         String tipoVivienda,
+                                         String otroTipoVivienda,
+                                         String numeroPisos,
+                                         String techo,
+                                         String paredes,
+                                         String piso,
+                                         String vivienda,
+                                         String numeroPersonas,
+                                         String problemasEstomacales,
+                                         String tipoProblemasEstomacales,
+                                         String otroProblemasEstomacales,
+                                         String enfermedadPiel,
+                                         String tipoEnfermedadPiel,
+                                         String otraEnfermedadPiel,
+                                         String abastecimientoAgua,
+                                         String nombreRio,
+                                         String otroAbastecimientoAgua,
+                                         String sisternaTanque,
+                                         String origenAgua,
+                                         String tratamientoOrigenAgua,
+                                         String usoAgua,
+                                         String capacidadTanque,
+                                         String capacidadSisterna,
+                                         String frecuenciaLimpieza,
+                                         String frecuenciaCloracion,
+                                         String otroFrecuenciaCloracion,
+                                         String dosisCloracion,
+                                         String otroDosisCloracion,
+                                         String mascotas_animal,
+                                         String consumo_animal,
+                                         String venta_animal,
+                                         String ornamentales_riego,
+                                         String consumo_riego,
+                                         String venta_riego,
+                                         int status
+                                         ) {
 
         db.addName1(codigo, fecha, horaInicio, horaFin, foto, tipoVivienda, otroTipoVivienda, numeroPisos, techo, paredes, piso, vivienda,
                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
@@ -1418,6 +1454,23 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
     }
 
+
+    private void saveNameToLocalStorage3(String codigo_persona,
+                                        String nombre_persona,
+                                        String dir_persona,
+                                        String edad_persona,
+                                        String sexo_persona,
+                                        String longitud_persona,
+                                        String latitud_persona,
+                                        int status_persona) {
+        db.addName3(codigo_persona, nombre_persona, dir_persona,  edad_persona, sexo_persona, longitud_persona, latitud_persona, status_persona);
+        Name3 n = new Name3(codigo_persona, nombre_persona,dir_persona,  edad_persona, sexo_persona, longitud_persona, latitud_persona, status_persona);
+        names3.add(n);
+
+        Toast.makeText(this,"Persona  agregada ",Toast.LENGTH_SHORT).show();
+        //refreshList();
+    }
+
     private void saveNameToServer() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Guardando en el servidor...");
@@ -1432,8 +1485,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         final String horaInicio = HoraInicio.getText().toString().trim();
         final String horaFin = this.horaFinal();
         final String foto ="imageUri";
-        final String codigo_persona="codigo_persona";
-        final String num ="num";
+
 
         final String tipoVivienda=this.pregunta1();
         final String otroTipoVivienda=campo_otros.getText().toString().trim();
@@ -1469,6 +1521,11 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         final String ornamentales_riego=String.valueOf(pregunta22());
         final String consumo_riego=text_sembrios_consumo.getText().toString().trim();
         final String venta_riego=text_sembrios_venta.getText().toString().trim();
+
+
+        final String codigo_persona=9+""+8;
+
+
 
 
 
@@ -1524,7 +1581,9 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                         ornamentales_riego,
                                         consumo_riego,
                                         venta_riego,
-                                        NAME_SYNCED_WITH_SERVER);
+                                        NAME_SYNCED_WITH_SERVER
+
+                                        );
                             } else {
                                 // si hay algun error
                                 // guardando el nombre en sqlite con estado no sincronizado
@@ -1532,7 +1591,8 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                         numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                         otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                         usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
-                                        otroDosisCloracion, mascotas_animal, consumo_animal, venta_animal, ornamentales_riego, consumo_riego, venta_riego, NAME_NOT_SYNCED_WITH_SERVER);
+                                        otroDosisCloracion, mascotas_animal, consumo_animal, venta_animal, ornamentales_riego, consumo_riego, venta_riego, NAME_NOT_SYNCED_WITH_SERVER
+                                        );
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1548,12 +1608,15 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                 numeroPersonas, problemasEstomacales, tipoProblemasEstomacales, otroProblemasEstomacales, enfermedadPiel, tipoEnfermedadPiel,
                                 otraEnfermedadPiel, abastecimientoAgua, nombreRio, otroAbastecimientoAgua, sisternaTanque, origenAgua, tratamientoOrigenAgua,
                                 usoAgua, capacidadTanque, capacidadSisterna, frecuenciaLimpieza, frecuenciaCloracion, otroFrecuenciaCloracion, dosisCloracion,
-                                otroDosisCloracion, mascotas_animal, consumo_animal, venta_animal, ornamentales_riego, consumo_riego, venta_riego, NAME_NOT_SYNCED_WITH_SERVER);
+                                otroDosisCloracion, mascotas_animal, consumo_animal, venta_animal, ornamentales_riego, consumo_riego, venta_riego, NAME_NOT_SYNCED_WITH_SERVER
+                                );
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+
+
                 params.put("codigo", codigo);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
@@ -1594,9 +1657,92 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                 params.put("consumo_riego",consumo_riego );
                 params.put("venta_riego",venta_riego );
 
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
 
 
 
+
+
+
+
+    private void saveNameToServer3() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Guardando persona...");
+        progressDialog.show();
+
+
+
+        final String codigo_persona=9+""+8;
+        final String nombre_persona=pregunta_nombre();
+        final String dir_persona=pregunta_direccion();
+        final String edad_persona=pregunta_edad();
+        final String sexo_persona=pregunta_sexo();
+
+        final String Longitud = longitud.getText().toString().trim();
+        final String Latitud = latitud.getText().toString().trim();
+
+
+
+
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL_SAVE_NAME3,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject obj1 = new JSONObject(response);
+                            if (!obj1.getBoolean("error")) {
+
+                                saveNameToLocalStorage3(
+                                        codigo_persona,
+                                        nombre_persona,
+                                        dir_persona,
+                                        edad_persona,
+                                        sexo_persona,
+                                        Longitud,
+                                        Latitud,
+                                        NAME_SYNCED_WITH_SERVER
+                                );
+                            } else {
+                                // si hay algun error
+                                // guardando el nombre en sqlite con estado no sincronizado
+                                saveNameToLocalStorage3(codigo_persona,
+                                        nombre_persona, dir_persona, edad_persona, sexo_persona, Longitud, Latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
+                        saveNameToLocalStorage3(codigo_persona,
+                                nombre_persona, dir_persona, edad_persona, sexo_persona, Longitud, Latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("codigo_persona",codigo_persona);
+                params.put("nombre_persona",nombre_persona);
+                params.put("dir_persona",dir_persona);
+                params.put("edad_persona",edad_persona);
+                params.put("sexo_persona",sexo_persona);
+                params.put("longitud_persona",Longitud);
+                params.put("latitud_persona",Latitud);
 
 
                 return params;
@@ -1606,6 +1752,9 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
+
+
+
 
 
 
@@ -1626,6 +1775,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(this, "FALTA LLENAR", Toast.LENGTH_SHORT).show();
                 }else{
                     saveNameToServer();
+                    saveNameToServer3();
                 }
 
 

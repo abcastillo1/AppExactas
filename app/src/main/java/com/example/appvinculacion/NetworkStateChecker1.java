@@ -44,6 +44,7 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                 Cursor cursor = db.getUnsyncedNames1();
 
 
+
                 if (cursor.moveToFirst()) {
                     do {
                         //calling the method to save the unsynced name to MySQL
@@ -88,10 +89,11 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
                                 cursor.getString(cursor.getColumnIndex(db.c_ORNAMENTALESRIEGO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CONSUMORIEGO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_VENTARIEGO))
-
                         );
                     } while (cursor.moveToNext());
                 }
+
+
             }
         }
 
@@ -137,7 +139,10 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
             final  String ornamentales_riego,
             final  String consumo_riego,
             final String venta_riego
-            ) {
+
+
+
+    ) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity1.URL_SAVE_NAME,
                 new Response.Listener<String>() {
@@ -212,5 +217,9 @@ public class NetworkStateChecker1 extends BroadcastReceiver {
 
         VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
+
+
+
+
 
 }

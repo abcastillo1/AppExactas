@@ -181,6 +181,10 @@
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="15dp" />
+            <Spinner
+                android:id="@+id/comboPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:id="@+id/textPregunta1"
