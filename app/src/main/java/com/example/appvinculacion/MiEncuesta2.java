@@ -74,6 +74,8 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
     private CheckBox check_cisterna,check_tanque,check_pozo,check_rio;
     private CheckBox check_turbia,check_solidos,check_coloracion,check_olor;
+    private EditText etHora,texto_diagnostico;
+
 
     private Spinner comboPersonas;
     private TextView txtNombre,txtDir,txtCodigo;
@@ -81,9 +83,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     ArrayList<Name3> personasList;
     MyDbHelper conn;
 
-    //ArrayList<String>
 
-    private EditText etHora,texto_diagnostico;
 
 
 
@@ -160,7 +160,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         txtNombre=(TextView) findViewById(R.id.txtNombre);
         txtDir=(TextView) findViewById(R.id.txtDir);
         txtCodigo=(TextView) findViewById(R.id.txtCodigo);
-
+        init();
         consultarListaPersonas();
         ArrayAdapter<CharSequence> adaptador=new ArrayAdapter(this,R.layout.simple_spinner_personas,listaPersonas);
         comboPersonas.setAdapter(adaptador);
@@ -215,6 +215,93 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
 
     }
+
+    private void init() {
+
+        check_cisterna=(CheckBox) findViewById(R.id.check_cisterna);
+        check_tanque=(CheckBox) findViewById(R.id.check_tanque);
+        check_pozo=(CheckBox) findViewById(R.id.check_pozo);
+        check_rio=(CheckBox) findViewById(R.id.check_rio);
+
+        check_turbia=(CheckBox) findViewById(R.id.check_cisterna);
+        check_solidos=(CheckBox) findViewById(R.id.check_tanque);
+        check_coloracion=(CheckBox) findViewById(R.id.check_pozo);
+        check_olor=(CheckBox) findViewById(R.id.check_rio);
+
+
+        texto_diagnostico=(EditText) findViewById(R.id.texto_diagnostico);
+
+
+    }
+    public String pregunta1(){
+
+        Boolean opc1= check_cisterna.isChecked();
+        Boolean opc2= check_tanque.isChecked();
+        Boolean opc3= check_pozo.isChecked();
+        Boolean opc4= check_rio.isChecked();
+
+        int val1 = (opc1) ? 1 : 0;
+        int val2 = (opc2) ? 1 : 0;
+        int val3 = (opc3) ? 1 : 0;
+        int val4 = (opc4) ? 1 : 0;
+
+        if(val1==0&&val2==0&&val3==0&&val4==0){
+            return "";
+        }else{
+            return val1+""+val2+""+val3+""+val4;
+        }
+
+    }
+    public String pregunta2(){
+
+        Boolean opc1= check_turbia.isChecked();
+        Boolean opc2= check_solidos.isChecked();
+        Boolean opc3= check_coloracion.isChecked();
+        Boolean opc4= check_olor.isChecked();
+
+        int val1 = (opc1) ? 1 : 0;
+        int val2 = (opc2) ? 1 : 0;
+        int val3 = (opc3) ? 1 : 0;
+        int val4 = (opc4) ? 1 : 0;
+
+        if(val1==0&&val2==0&&val3==0&&val4==0){
+            return "";
+        }else{
+            return val1+""+val2+""+val3+""+val4;
+        }
+
+    }
+    public String codigoVinculacion(){
+        preferences = getSharedPreferences("Preferences",MODE_PRIVATE);
+        String usuario_codigo=preferences.getString("usuario_codigo", null);
+        return "Vinc-"+usuario_codigo;
+    }
+    public String codigoPersona(){
+        String codigopersona=txtCodigo.getText().toString().trim();
+        return codigopersona;
+    }
+    public String codigoEncuestador(){
+        preferences = getSharedPreferences("Preferences",MODE_PRIVATE);
+        String usuario_codigo=preferences.getString("usuario_codigo", null);
+        return usuario_codigo;
+    }
+
+    public boolean comprobarllenado(){
+
+
+        if(pregunta1()==""||pregunta2()==""){
+            return true;
+        }if(codigoVinculacion()!="Vinc-"||codigoEncuestador()==null){
+            return true;
+        }
+        else{return false;}
+
+    }
+
+
+
+
+
 
     private void consultarListaPersonas() {
         SQLiteDatabase db = conn.getReadableDatabase();
@@ -483,14 +570,10 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                 //Formateo el minuto obtenido: antepone el 0 si son menores de 10
                 String minutoFormateado = (minute < 10)? String.valueOf(CERO + minute):String.valueOf(minute);
                 //Obtengo el valor a.m. o p.m., dependiendo de la selección del usuario
-                String AM_PM;
-                if(hourOfDay < 12) {
-                    AM_PM = "a.m.";
-                } else {
-                    AM_PM = "p.m.";
-                }
+
+
                 //Muestro la hora con el formato deseado
-                etHora.setText(horaFormateada + DOS_PUNTOS + minutoFormateado + " " + AM_PM);
+                etHora.setText(horaFormateada + DOS_PUNTOS + minutoFormateado);
             }
             //Estos valores deben ir en ese orden
             //Al colocar en false se muestra en formato 12 horas y true en formato 24 horas
@@ -702,7 +785,14 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id. buttonSave:
-                saveNameToServer();
+
+                if(comprobarllenado()){
+                    Toast.makeText(this, "FALTA LLENAR", Toast.LENGTH_SHORT).show();
+                }else{
+                    saveNameToServer();
+
+                }
+
                 break;
 
         }

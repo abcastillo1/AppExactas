@@ -38,6 +38,10 @@ public class UsuarioAdapter {
     public static final String c_UTM_LO="Longitud";
     public static final String c_UTM_LA="Latitud";
 
+    public static final String c_LUGAR="lugar";
+    public static final String c_CODIGOENCUESTA="codigoEncuesta";
+
+
     public static final String c_CODIGO_PERSONA="codigo_persona";
     public static final String c_NUM="numero";
     public static final String c_TIPOVIVIENDA="tipoVivienda";
@@ -97,7 +101,7 @@ public class UsuarioAdapter {
     public static final String CREATE_TABLE2 = "CREATE TABLE " + TABLE_NAME2 + " ("
             + COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             + c_CODIGO + " VARCHAR, "
-            + c_FECHA + " VARCHAR, "
+            + c_CODIGO_PERSONA + " VARCHAR, "
             + c_HORAINICIO + " VARCHAR, "
             + c_HORAFIN + " VARCHAR, "
             + c_FOTO + " TEXT, "
