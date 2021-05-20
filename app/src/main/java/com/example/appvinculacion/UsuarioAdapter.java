@@ -40,6 +40,12 @@ public class UsuarioAdapter {
 
     public static final String c_LUGAR="lugar";
     public static final String c_CODIGOENCUESTA="codigoEncuesta";
+    public static final String c_ASPECTO="aspecto";
+    public static final String c_OBSERVACIONES="observaciones";
+    public static final String c_HORAMUESTRA="horaMuestra";
+
+
+
 
 
     public static final String c_CODIGO_PERSONA="codigo_persona";
@@ -102,11 +108,15 @@ public class UsuarioAdapter {
             + COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             + c_CODIGO + " VARCHAR, "
             + c_CODIGO_PERSONA + " VARCHAR, "
+            + c_CODIGOENCUESTA + " VARCHAR, "
+            + c_FECHA + " VARCHAR, "
             + c_HORAINICIO + " VARCHAR, "
             + c_HORAFIN + " VARCHAR, "
+            + c_HORAMUESTRA + " VARCHAR, "
             + c_FOTO + " TEXT, "
-            + c_UTM_LO + " VARCHAR, "
-            + c_UTM_LA + " VARCHAR, "
+            + c_LUGAR + " VARCHAR, "
+            + c_ASPECTO + " VARCHAR, "
+            + c_OBSERVACIONES + " VARCHAR, "
             + c_ESTADO + " TINYINT);";
 
     public static final String CREATE_TABLE1 = "CREATE TABLE " + TABLE_NAME1 + " ("
@@ -254,25 +264,29 @@ public class UsuarioAdapter {
 
     //METODOS AGREGADOS DE LA ENCUESTA2
 
-    public long addName2(String codigo, String fecha, String horaInicio, String horaFin, String Foto,  String Longitud, String Latitud, int status) {
+    public void addName2(String codigo,String codigoPersona,String codigoEncuesta, String fecha, String horaInicio, String horaFin, String horaMuestra,  String foto,  String lugar, String aspecto, String observaciones, int status) {
 
 
 
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(c_CODIGO, codigo);
-        contentValues.put(c_FECHA, fecha);
-        contentValues.put(c_HORAINICIO, horaInicio);
-        contentValues.put(c_HORAFIN, horaFin);
-        contentValues.put(c_FOTO, Foto);
-        contentValues.put(c_UTM_LO, Longitud);
-        contentValues.put(c_UTM_LA, Latitud);
-        contentValues.put(c_ESTADO, status);
+        contentValues.put(c_CODIGO,codigo);
+        contentValues.put(c_CODIGO_PERSONA,codigoPersona);
+        contentValues.put(c_CODIGOENCUESTA,codigoEncuesta);
+        contentValues.put(c_FECHA,fecha);
+        contentValues.put(c_HORAINICIO,horaInicio);
+        contentValues.put(c_HORAFIN,horaFin);
+        contentValues.put(c_HORAMUESTRA,horaMuestra);
+        contentValues.put(c_FOTO,foto);
+        contentValues.put(c_LUGAR,lugar);
+        contentValues.put(c_ASPECTO,aspecto);
+        contentValues.put(c_OBSERVACIONES,observaciones);
+        contentValues.put(c_ESTADO,status);
 
-        long id=db.insert(TABLE_NAME2, null, contentValues);
+        db.insert(TABLE_NAME2, null, contentValues);
         db.close();
-        return id;
+
     }
     public boolean updateNameStatus2(int id, int status) {
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -370,7 +384,7 @@ public class UsuarioAdapter {
         contentValues.put(c_ESTADO, status);
 
         db.update(TABLE_NAME1, contentValues, COLUMN_ID + "=" + id, null);
-
+        //db.delete(TABLE_NAME1,c_ESTADO + "=" + status, null);
         db.close();
         return true;
     }

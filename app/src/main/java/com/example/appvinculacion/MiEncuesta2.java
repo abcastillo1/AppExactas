@@ -190,7 +190,6 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
         profileIv=findViewById(R.id.profileIv);
         initFechahora();
-        initLocalizacion();
 
         //matrices de permisos de inicio
         cameraPermissions=new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -274,7 +273,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     public String codigoVinculacion(){
         preferences = getSharedPreferences("Preferences",MODE_PRIVATE);
         String usuario_codigo=preferences.getString("usuario_codigo", null);
-        return "Vinc-"+usuario_codigo;
+        return usuario_codigo;
     }
     public String codigoPersona(){
         String codigopersona=txtCodigo.getText().toString().trim();
@@ -285,13 +284,15 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         String usuario_codigo=preferences.getString("usuario_codigo", null);
         return usuario_codigo;
     }
-
+    public String preguntaHoraMuestra(){
+    String muestra=etHora.getText().toString().trim();
+    return muestra;
+    }
     public boolean comprobarllenado(){
-
 
         if(pregunta1()==""||pregunta2()==""){
             return true;
-        }if(codigoVinculacion()!="Vinc-"||codigoEncuestador()==null){
+        }if(codigoVinculacion().isEmpty()||codigoEncuestador().isEmpty()||preguntaHoraMuestra().isEmpty()){
             return true;
         }
         else{return false;}
@@ -324,7 +325,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         listaPersonas.add("Seleccione un nombre");
 
         for(int i=0;i<personasList.size();i++){
-            listaPersonas.add(i+" - "+personasList.get(i).getNombre());
+            listaPersonas.add(1+i+" - "+personasList.get(i).getNombre());
 
         }
 
@@ -475,36 +476,8 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    private void initLocalizacion(){
-        txtLatitud = (TextView) findViewById(R.id.txtLatitud);
-        txtLongitud = (TextView) findViewById(R.id.txtLongitud);
-        direccion = (TextView) findViewById(R.id.txtDireccion);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
-        } else {
-            locationStart();
-        }
 
-    }
 
-    private void locationStart() {
-        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        MiEncuesta2.Localizacion Local = new MiEncuesta2.Localizacion();
-        Local.setUbicacionActivity(this);
-        final boolean gpsEnabled = mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (!gpsEnabled) {
-            Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(settingsIntent);
-        }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
-            return;
-        }
-        mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
-        txtLatitud.setText("Localización agregada");
-        direccion.setText("");
-    }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -583,54 +556,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         recogerHora.show();
     }
 
-    /* Aqui empieza la Clase Localizacion */
-    public class Localizacion implements LocationListener {
-        MiEncuesta2 miEncuesta2;
-        public  MiEncuesta2 getUbicacionActivity() {
-            return miEncuesta2;
-        }
-        public void setUbicacionActivity(MiEncuesta2 miEncuesta2) {
-            this.miEncuesta2 = miEncuesta2;
-        }
-        @Override
-        public void onLocationChanged(Location loc) {
-            // Este metodo se ejecuta cada vez que el GPS recibe nuevas coordenadas
-            // debido a la deteccion de un cambio de ubicacion
-            loc.getLatitude();
-            loc.getLongitude();
-            String sLatitud = String.valueOf(loc.getLatitude());
-            String sLongitud = String.valueOf(loc.getLongitude());
-            txtLatitud.setText(sLatitud);
-            txtLongitud.setText(sLongitud);
-            this.miEncuesta2.setLocation(loc);
-        }
-        @Override
-        public void onProviderDisabled(String provider) {
-            // Este metodo se ejecuta cuando el GPS es desactivado
-            txtLatitud.setText("GPS Desactivado");
-            txtLongitud.setText("GPS Desactivado");
-        }
-        @Override
-        public void onProviderEnabled(String provider) {
-            // Este metodo se ejecuta cuando el GPS es activado
-            txtLatitud.setText("GPS Activado");
-            txtLongitud.setText("GPS Activado");
-        }
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            switch (status) {
-                case LocationProvider.AVAILABLE:
-                    Log.d("debug", "LocationProvider.AVAILABLE");
-                    break;
-                case LocationProvider.OUT_OF_SERVICE:
-                    Log.d("debug", "LocationProvider.OUT_OF_SERVICE");
-                    break;
-                case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                    Log.d("debug", "LocationProvider.TEMPORARILY_UNAVAILABLE");
-                    break;
-            }
-        }
-    }
+
     //fecha y hora
     public void fechayhora() {
 
@@ -661,11 +587,7 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                 Name2 name = new Name2(
                         cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
                         cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
-                        cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
                         cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
-                        cursor.getString(cursor.getColumnIndex(db.c_FOTO)),
-                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LO)),
-                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LA)),
                         cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
                 );
                 names.add(name);
@@ -686,12 +608,20 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
         String usuario_codigo=preferences.getString("usuario_codigo", null);
 
         final String codigo = usuario_codigo;
+        final String codigoPersona=codigoPersona();
+        final String codigoEncuesta=codigoVinculacion();
         final String fecha = TituloFecha.getText().toString().trim();
         final String horaInicio = HoraInicio.getText().toString().trim();;
-        final String horaFin = this.horaFinal();
-        final String foto =getStringImagen(bitmap);
-        final String longitud = txtLongitud.getText().toString().trim();
-        final String latitud = txtLatitud.getText().toString().trim();
+        final String horaFin = horaFinal();
+        final String horaMuestra=preguntaHoraMuestra();
+        final String foto ="55";//getStringImagen(bitmap);
+        final String lugar=pregunta1();
+        final String aspecto=pregunta2();
+        final String observaciones=texto_diagnostico.getText().toString().trim();
+
+
+
+
 
 
 
@@ -707,11 +637,25 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                             if (!obj2.getBoolean("error")) {
                                 // si hay un exito
                                 // almacenando el nombre en sqlite con estado sincronizado
-                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_SYNCED_WITH_SERVER);
+                                saveNameToLocalStorage(
+                                        codigo,
+                                        codigoPersona,
+                                        codigoEncuesta,
+                                        fecha,
+                                        horaInicio,
+                                        horaFin,
+                                        horaMuestra,
+                                        foto,
+                                        lugar,
+                                        aspecto,
+                                        observaciones,
+                                        NAME_SYNCED_WITH_SERVER
+                                );
+                                Toast.makeText(MiEncuesta2.this,"Se guardó en el Servidor",Toast.LENGTH_SHORT).show();
                             } else {
                                 // si hay algun error
                                 // guardando el nombre en sqlite con estado no sincronizado
-                                saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                                saveNameToLocalStorage(codigo, codigoPersona, codigoEncuesta, fecha, horaInicio, horaFin, horaMuestra,foto,lugar,aspecto,observaciones, NAME_NOT_SYNCED_WITH_SERVER);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -722,20 +666,28 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
+
                         // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
-                        saveNameToLocalStorage(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                        saveNameToLocalStorage(codigo, codigoPersona, codigoEncuesta, fecha, horaInicio, horaFin, horaMuestra,foto,lugar,aspecto,observaciones, NAME_NOT_SYNCED_WITH_SERVER);
+                        Toast.makeText(MiEncuesta2.this,"Se guardó en el teléfono",Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("codigo", codigo);
+                params.put("id_encuestador", codigo);
+                params.put("id_pers", codigoPersona);
+                params.put("lugar", lugar);
+                params.put("codigo", codigoEncuesta);
+                params.put("aspecto", aspecto);
+                params.put("observaciones", observaciones);
+                params.put("foto", foto);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
                 params.put("horaFin", horaFin);
-                params.put("foto", foto);
-                params.put("longitud", longitud);
-                params.put("latitud", latitud);
+                params.put("horaMuestra", horaMuestra);
+
+
 
                 return params;
             }
@@ -745,14 +697,25 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    private void saveNameToLocalStorage(String codigo, String fecha, String horaInicio, String horaFin, String foto, String longitud, String latitud, int status) {
+    private void saveNameToLocalStorage(String codigo,
+                                        String codigoPersona,
+                                        String codigoEncuesta,
+                                        String fecha,
+                                        String horaInicio,
+                                        String horaFin,
+                                        String horaMuestra,
+                                        String foto,
+                                        String lugar,
+                                        String aspecto,
+                                        String observaciones,
+                                        int status) {
         //editTextCode.setText("");
        // editTextName.setText("");
-        long id= db.addName2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
-        Name2 n = new Name2(codigo, fecha, horaInicio, horaFin, foto, longitud, latitud, status);
+        db.addName2( codigo, codigoPersona, codigoEncuesta, fecha, horaInicio, horaFin, horaMuestra, foto, lugar, aspecto, observaciones, status);
+        Name2 n = new Name2(codigo, fecha, horaFin, status);
         names.add(n);
 
-        Toast.makeText(this,"Encuesta "+id+" agregada ",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Encuesta agregada ",Toast.LENGTH_SHORT).show();
         //refreshList();
 
     }

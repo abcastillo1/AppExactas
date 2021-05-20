@@ -51,12 +51,16 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
 
                                 cursor.getInt(cursor.getColumnIndex(db.COLUMN_ID)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
+                                cursor.getString(cursor.getColumnIndex(db.c_CODIGO_PERSONA)),
+                                cursor.getString(cursor.getColumnIndex(db.c_CODIGOENCUESTA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
                                 cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
+                                cursor.getString(cursor.getColumnIndex(db.c_HORAMUESTRA)),
                                 cursor.getString(cursor.getColumnIndex(db.c_FOTO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_UTM_LO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_UTM_LA))
+                                cursor.getString(cursor.getColumnIndex(db.c_LUGAR)),
+                                cursor.getString(cursor.getColumnIndex(db.c_ASPECTO)),
+                                cursor.getString(cursor.getColumnIndex(db.c_OBSERVACIONES))
 
                         );
                     } while (cursor.moveToNext());
@@ -66,7 +70,18 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
 
     }
 
-    private void saveName(final int id,final String codigo,final String fecha,final String horaInicio,final String horaFin,final String foto,final String longitud,final String latitud) {
+    private void saveName(final int id,
+                          final String codigo,
+                          final String codigoPersona,
+                          final String codigoEncuesta,
+                          final String fecha,
+                          final String horaInicio,
+                          final String horaFin,
+                          final String horaMuestra,
+                          final String foto,
+                          final String lugar,
+                          final String aspecto,
+                          final String observaciones) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity2.URL_SAVE_NAME,
                 new Response.Listener<String>() {
                     @Override
@@ -94,13 +109,17 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("codigo", codigo);
-                params.put("fecha", fecha);
-                params.put("horaInicio", horaInicio);
-                params.put("horaFin", horaFin);
-                params.put("foto", foto);
-                params.put("longitud", longitud);
-                params.put("latitud", latitud);
+                params.put("id_encuestador",codigo);
+                params.put("id_pers",codigoPersona);
+                params.put("lugar",lugar);
+                params.put("codigo",codigoEncuesta);
+                params.put("aspecto",aspecto);
+                params.put("observaciones",observaciones);
+                params.put("foto",foto);
+                params.put("fecha",fecha);
+                params.put("horaInicio",horaInicio);
+                params.put("horaFin",horaFin);
+                params.put("horaMuestra",horaMuestra);
 
                 return params;
             }

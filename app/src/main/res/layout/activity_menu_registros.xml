@@ -40,6 +40,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
+            android:textSize="17dp"
             android:text="Usuarios Registrados"
             android:layout_below="@+id/textView2"
             android:layout_gravity="center_horizontal"
@@ -54,6 +55,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="40dp"
+            android:textSize="17dp"
             android:text="Encuesta 1" />
 
         <Button
@@ -64,6 +66,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
             android:text="Encuesta 2"
+            android:textSize="17dp"
             android:layout_below="@+id/button2"
             android:layout_gravity="center_horizontal"
             />
@@ -76,6 +79,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
             android:layout_marginBottom="40dp"
+            android:textSize="17dp"
             android:text="Personas Encuestadas"
             android:layout_below="@+id/button3"
             android:layout_gravity="center_horizontal"

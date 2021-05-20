@@ -35,7 +35,7 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        registerReceiver(new NetworkStateChecker(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(new NetworkStateChecker2(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         db = new UsuarioAdapter(this);
         names = new ArrayList<>();
@@ -72,11 +72,7 @@ public class MainActivity2 extends AppCompatActivity {
                 Name2 name = new Name2(
                         cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
                         cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
-                        cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
                         cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
-                        cursor.getString(cursor.getColumnIndex(db.c_FOTO)),
-                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LO)),
-                        cursor.getString(cursor.getColumnIndex(db.c_UTM_LA)),
                         cursor.getInt(cursor.getColumnIndex(db.c_ESTADO))
                 );
                 names.add(name);

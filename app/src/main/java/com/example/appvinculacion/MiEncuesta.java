@@ -1481,13 +1481,13 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
         Name3 n = new Name3(codigo_persona, nombre_persona,dir_persona,  edad_persona, sexo_persona, longitud_persona, latitud_persona, status_persona);
         names3.add(n);
 
-        Toast.makeText(this,"Persona  agregada ",Toast.LENGTH_SHORT).show();
+
         //refreshList();
     }
 
     private void saveNameToServer() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Guardando en el servidor...");
+        progressDialog.setMessage("Enviando los datos");
         progressDialog.show();
 
         preferences = getSharedPreferences("Preferences",MODE_PRIVATE);
@@ -1633,7 +1633,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
 
                 params.put("codigo", codigo);
-                params.put("codigo",codigo_persona);
+                params.put("codigo_per",codigo_persona);
                 params.put("fecha", fecha);
                 params.put("horaInicio", horaInicio);
                 params.put("horaFin", horaFin);
@@ -1689,7 +1689,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
 
     private void saveNameToServer3() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Guardando persona...");
+        progressDialog.setMessage("Estableciendo conexión");
         progressDialog.show();
 
 
@@ -1728,11 +1728,13 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                                         Latitud,
                                         NAME_SYNCED_WITH_SERVER
                                 );
+                                Toast.makeText(MiEncuesta.this,"Se guardó en el Servidor",Toast.LENGTH_SHORT).show();
                             } else {
                                 // si hay algun error
                                 // guardando el nombre en sqlite con estado no sincronizado
                                 saveNameToLocalStorage3(codigo_persona,
                                         nombre_persona, dir_persona, edad_persona, sexo_persona, Longitud, Latitud, NAME_NOT_SYNCED_WITH_SERVER);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1746,6 +1748,7 @@ public class MiEncuesta extends AppCompatActivity implements View.OnClickListene
                         // en caso de error al almacenar el nombre en sqlite con estado no sincronizado
                         saveNameToLocalStorage3(codigo_persona,
                                 nombre_persona, dir_persona, edad_persona, sexo_persona, Longitud, Latitud, NAME_NOT_SYNCED_WITH_SERVER);
+                        Toast.makeText(MiEncuesta.this,"Se guardó en el teléfono",Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

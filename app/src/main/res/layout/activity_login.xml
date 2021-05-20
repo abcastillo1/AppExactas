@@ -6,114 +6,117 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-    <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
-        tools:ignore="MissingConstraints">
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="94dp"
-            android:layout_height="103dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/login" />
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-    <TextView
-        android:id="@+id/tv_main_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:gravity="center_horizontal"
-        android:text="Inicio de sesión"
-        android:textColor="@color/gris"
-        android:textSize="38sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="94dp"
+                android:layout_height="103dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/login" />
 
-    <EditText
-        android:id="@+id/et_main_usuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:background="#F4F4F4"
-        android:ems="10"
-        android:padding="10dp"
-        android:textSize="20dp"
-        android:textColorHint="@color/gris"
-        android:hint="Nombre y Apellido"
-        android:textColor="@color/black"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_main_titulo" />
+            <TextView
+                android:id="@+id/tv_main_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:gravity="center_horizontal"
+                android:text="Inicio de sesión"
+                android:textColor="@color/gris"
+                android:textSize="38sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <EditText
-        android:id="@+id/et_main_contrasena"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="20dp"
-        android:background="#F4F4F4"
-        android:ems="10"
-        android:hint="Código de encuestador"
-        android:textColor="@color/black"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textSize="20dp"
-        android:textColorHint="@color/gris"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_main_usuario" />
+            <EditText
+                android:id="@+id/et_main_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:background="#F4F4F4"
+                android:ems="10"
+                android:hint="Nombre y Apellido"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gris"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_main_titulo" />
 
-    <Button
-        android:id="@+id/btn_main_registrarse"
-        android:layout_width="231dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="48dp"
-        android:background="#03A9F4"
-        android:padding="20dp"
-        android:text="INGRESAR"
-        android:textSize="25sp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_main_contrasena" />
+            <EditText
+                android:id="@+id/et_main_contrasena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                android:background="#F4F4F4"
+                android:ems="10"
+                android:hint="Código de encuestador"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gris"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_main_usuario" />
 
-    <Button
-        android:id="@+id/btn_main_nuevo"
-        android:layout_width="231dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
-        android:padding="20dp"
-        android:text="REGISTRARSE"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_main_registrarse" />
+            <Button
+                android:id="@+id/btn_main_registrarse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="40dp"
+                android:background="#03A9F4"
+                android:text="INGRESAR"
+                android:textColor="@color/white"
 
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_main_contrasena" />
+
+            <Button
+                android:id="@+id/btn_main_nuevo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="40dp"
+                android:background="#D4D5D6"
+                android:text="REGISTRARSE"
+                android:textSize="19dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_main_registrarse" />
 
 
         </LinearLayout>
 
 
-   </ScrollView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
