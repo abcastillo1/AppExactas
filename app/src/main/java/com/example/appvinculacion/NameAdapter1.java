@@ -8,21 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 
 import java.util.List;
 
-public class NameAdapter2 extends ArrayAdapter<Name2> {
+public class NameAdapter1 extends ArrayAdapter<Name1> {
 
-    private List<Name2> names;
+    private List<Name1> names;
     private Context context;
 
-    public NameAdapter2(Context context, int resource,List<Name2> names) {
-        super(context, resource, names);
+    public NameAdapter1(Context context, int resource,List<Name1> names) {
+        super(context, resource,names);
         this.context = context;
         this.names = names;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -35,7 +33,7 @@ public class NameAdapter2 extends ArrayAdapter<Name2> {
         ImageView imageViewStatus = (ImageView) listViewItem.findViewById(R.id.imageViewStatus);
 
         //getting the current name
-        Name2 name = names.get(position);
+        Name1 name = names.get(position);
 
         //setting the name to textview
 
@@ -52,4 +50,6 @@ public class NameAdapter2 extends ArrayAdapter<Name2> {
 
         return listViewItem;
     }
+
+
 }

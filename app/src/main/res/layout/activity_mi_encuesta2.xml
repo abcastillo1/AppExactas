@@ -44,128 +44,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profileIv"
-
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="fecha"
                 android:textAlignment="center"
                 android:textColor="@color/nos"
                 android:textSize="10dp"
+                android:visibility="gone"
                  />
             <TextView
                 android:id="@+id/HoraInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/TituloFecha"
-
                 android:gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Hora"
                 android:textAlignment="center"
                 android:textColor="@color/nos"
                 android:textSize="10dp"
-
+                android:visibility="gone"
                 />
 
-            <TextView
-                android:id="@+id/TituloLocalizacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profileIv"
-                android:background="#FFFFFF"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:text="MI UBICACIÓN ACTUAL"
-                android:textAlignment="center"
-                android:textColor="@color/nos"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="15dp" />
-
-            <LinearLayout
-                android:id="@+id/seccionUbicacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/TituloLocalizacion"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp">
-
-                <TextView
-                    android:id="@+id/tituloLatitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:gravity="right"
-                    android:text="Lat : "
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:id="@+id/txtLatitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:gravity="right"
-                    android:text="Latitud"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/seccionUbicacion1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/TituloLocalizacion"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp">
-
-                <TextView
-                    android:id="@+id/tituloLongitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:gravity="right"
-                    android:text="Long : "
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:id="@+id/txtLongitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:gravity="right"
-                    android:text="Latitud"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/seccionUbicacion2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/seccionUbicacion1"
-                android:paddingLeft="25dp"
-                android:paddingTop="10dp"
-                android:paddingRight="25dp"
-                android:layout_marginBottom="25dp">
-
-                <TextView
-                    android:id="@+id/txtDireccion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:gravity="right"
-                    android:text="Direccion: "
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-
-            </LinearLayout>
 
 
             <TextView
@@ -182,6 +82,16 @@
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="15dp" />
+            <Spinner
+                android:id="@+id/comboPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"
+
+                android:layout_marginEnd="25dp"
+                android:textSize="18dp"
+                android:padding="5dp"/>
 
             <LinearLayout
                 android:id="@+id/textPregunta1"
@@ -192,14 +102,31 @@
                 android:orientation="vertical"
                 android:padding="25dp">
 
-                <EditText
-                    android:id="@+id/encuestado_nombre"
+                <TextView
+                    android:id="@+id/txtCodigo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="15dp"
 
+                    android:hint=""
+                    android:inputType="textPersonName|textCapWords"
+                    android:padding="5dp"
+                    android:background="#DCDADA"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gris"
+                    android:textSize="17dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_below="@+id/txtCodigo"
                     android:hint="Nombres"
                     android:inputType="textPersonName|textCapWords"
                     android:padding="5dp"
@@ -208,11 +135,11 @@
                     android:textColorHint="@color/gris"
                     android:textSize="17dp" />
 
-                <EditText
-                    android:id="@+id/encuestado_direccion"
+                <TextView
+                    android:id="@+id/txtDir"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/encuestado_nombre"
+                    android:layout_below="@+id/txtNombre"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="15dp"
@@ -279,7 +206,7 @@
                     android:theme="@style/MyCheckBox" />
 
                 <CheckBox
-                    android:id="@+id/check_"
+                    android:id="@+id/check_rio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
@@ -289,6 +216,58 @@
                     android:theme="@style/MyCheckBox" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/textPreguntaMuestra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textPregunta3"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+                <TextView
+                    android:id="@+id/texto_info11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="HORA DE TOMA DE MUESTRA"
+                    android:textSize="18dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:background="#E64187FF"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_mostrar_hora_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="time"
+                    android:hint="@string/formato_hora"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/texto_info11" />
+
+                <Button
+                    android:id="@+id/ib_obtener_hora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:background="#03A9F4"
+                    android:padding="5dp"
+                    android:text="USAR RELOJ"
+                    android:textColor="@color/white"
+                    android:layout_below="@+id/textPregunta3"
+               />
+
+            </LinearLayout>
+
+
+
 
             <LinearLayout
                 android:id="@+id/textPregunta3"

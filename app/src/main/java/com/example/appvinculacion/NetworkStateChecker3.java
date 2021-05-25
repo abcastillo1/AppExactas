@@ -19,11 +19,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NetworkStateChecker2 extends BroadcastReceiver {
+public class NetworkStateChecker3 extends BroadcastReceiver {
 
     private Context context;
     private UsuarioAdapter db;
-    private MainActivity2 main;
+    private MainActivity3 main;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -41,59 +41,52 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI || activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
 
                 //getting all the unsynced names
-                Cursor cursor = db.getUnsyncedNames2();
+                Cursor cursor = db.getUnsyncedNames3();
+
 
 
                 if (cursor.moveToFirst()) {
                     do {
                         //calling the method to save the unsynced name to MySQL
                         saveName(
-
                                 cursor.getInt(cursor.getColumnIndex(db.COLUMN_ID)),
                                 cursor.getString(cursor.getColumnIndex(db.c_CODIGO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_CODIGO_PERSONA)),
-                                cursor.getString(cursor.getColumnIndex(db.c_CODIGOENCUESTA)),
-                                cursor.getString(cursor.getColumnIndex(db.c_FECHA)),
-                                cursor.getString(cursor.getColumnIndex(db.c_HORAINICIO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_HORAFIN)),
-                                cursor.getString(cursor.getColumnIndex(db.c_HORAMUESTRA)),
-                                cursor.getString(cursor.getColumnIndex(db.c_FOTO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_LUGAR)),
-                                cursor.getString(cursor.getColumnIndex(db.c_ASPECTO)),
-                                cursor.getString(cursor.getColumnIndex(db.c_OBSERVACIONES))
-
+                                cursor.getString(cursor.getColumnIndex(db.c_NOMBRE)),
+                                cursor.getString(cursor.getColumnIndex(db.c_DIRECCION)),
+                                cursor.getString(cursor.getColumnIndex(db.c_EDAD)),
+                                cursor.getString(cursor.getColumnIndex(db.c_SEXO)),
+                                cursor.getString(cursor.getColumnIndex(db.c_UTM_LO)),
+                                cursor.getString(cursor.getColumnIndex(db.c_UTM_LA))
                         );
                     } while (cursor.moveToNext());
                 }
+
             }
         }
 
     }
+    private void saveName(
+            final int id_persona,
+            final String codigo_persona,
+            final String nombre_persona,
+            final String dir_persona,
+            final String edad_persona,
+            final String sexo_persona,
+            final String longitud_persona,
+            final String latitud_persona) {
 
-    private void saveName(final int id,
-                          final String codigo,
-                          final String codigoPersona,
-                          final String codigoEncuesta,
-                          final String fecha,
-                          final String horaInicio,
-                          final String horaFin,
-                          final String horaMuestra,
-                          final String foto,
-                          final String lugar,
-                          final String aspecto,
-                          final String observaciones) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity2.URL_SAVE_NAME,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, MainActivity3.URL_SAVE_NAME,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject obj2 = new JSONObject(response);
-                            if (!obj2.getBoolean("error")) {
+                            JSONObject obj1 = new JSONObject(response);
+                            if (!obj1.getBoolean("error")) {
                                 // actualizando el estado en sqlite
-                                db.updateNameStatus2(id,main.NAME_SYNCED_WITH_SERVER);
+                                db.updateNameStatus3(id_persona,MainActivity3.NAME_SYNCED_WITH_SERVER);
 
                                 // enviando la transmisión para actualizar la lista
-                                context.sendBroadcast(new Intent(MainActivity2.DATA_SAVED_BROADCAST));
+                                context.sendBroadcast(new Intent(MainActivity3.DATA_SAVED_BROADCAST));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -109,17 +102,14 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id_encuestador",codigo);
-                params.put("id_pers",codigoPersona);
-                params.put("lugar",lugar);
-                params.put("codigo",codigoEncuesta);
-                params.put("aspecto",aspecto);
-                params.put("observaciones",observaciones);
-                params.put("foto",foto);
-                params.put("fecha",fecha);
-                params.put("horaInicio",horaInicio);
-                params.put("horaFin",horaFin);
-                params.put("horaMuestra",horaMuestra);
+                params.put("codigo_persona",codigo_persona );
+                params.put("nombre_persona",nombre_persona );
+                params.put("dir_persona",dir_persona );
+                params.put("edad_persona",edad_persona );
+                params.put("sexo_persona",sexo_persona );
+                params.put("longitud_persona",longitud_persona );
+                params.put("latitud_persona",latitud_persona );
+
 
                 return params;
             }
@@ -127,5 +117,10 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
 
         VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
+
+
+
+
+
 
 }

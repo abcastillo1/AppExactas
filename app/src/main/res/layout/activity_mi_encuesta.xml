@@ -41,6 +41,35 @@
                 android:src="@drawable/camara" />
 
             <TextView
+                android:id="@+id/TituloFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profileIv"
+
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="fecha"
+                android:textAlignment="center"
+                android:textColor="@color/nos"
+                android:textSize="10dp"
+                android:visibility="gone"
+                />
+            <TextView
+                android:id="@+id/HoraInicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TituloFecha"
+
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Hora"
+                android:textAlignment="center"
+                android:textColor="@color/nos"
+                android:textSize="10dp"
+                android:visibility="gone"
+                />
+
+            <TextView
                 android:id="@+id/TituloLocalizacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -457,7 +486,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="Bloque"
+                    android:text="Hormigón"
                     android:textColor="@color/black"
                     android:textSize="17dp"
                     android:theme="@style/MyCheckBox" />
@@ -467,7 +496,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="Hormigón"
+                    android:text="Porcelanato"
                     android:textColor="@color/black"
                     android:textSize="17dp"
                     android:theme="@style/MyCheckBox" />
@@ -477,7 +506,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="Loza"
+                    android:text="Tierra"
                     android:textColor="@color/black"
                     android:textSize="17dp"
                     android:theme="@style/MyCheckBox" />
@@ -506,6 +535,22 @@
                 android:background="#5CEAEAEA"
                 android:orientation="vertical"
                 android:padding="25dp">
+                <TextView
+                    android:id="@+id/encuestado_codigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="#DCDADA"
+                    android:hint=""
+                    android:inputType="textPersonName|textCapWords"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gris"
+                    android:textSize="17dp"
+                    />
+
 
                 <EditText
                     android:id="@+id/encuestado_nombre"
@@ -514,9 +559,9 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="15dp"
-
                     android:background="#DCDADA"
                     android:hint="Nombres"
+                    android:layout_below="@+id/encuestado_codigo"
                     android:inputType="textPersonName|textCapWords"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -1059,11 +1104,56 @@
                         android:textSize="18dp"
                         android:textStyle="bold" />
 
+                    <CheckBox
+                        android:id="@+id/check_hongos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:checked="false"
+                        android:text="Hongos"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:theme="@style/MyCheckBox" />
+
+                    <CheckBox
+                        android:id="@+id/check_escabiosis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Escabiosis"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:theme="@style/MyCheckBox" />
+
+                    <CheckBox
+                        android:id="@+id/check_alergias"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:checked="false"
+                        android:text="Alergias"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:theme="@style/MyCheckBox" />
+
+
+
+                    <CheckBox
+                        android:id="@+id/check_otra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Otras"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:theme="@style/MyCheckBox" />
+
+
                     <EditText
                         android:id="@+id/texto_diagnostico1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/texto_info13"
+                        android:layout_below="@+id/check_otra"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="15dp"

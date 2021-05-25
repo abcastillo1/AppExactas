@@ -6,20 +6,26 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permisos para la camara e imagenes -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Permisos para la ubicacion o localizacion -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
-        android:appComponentFactory="whateverString"
+        android:appComponentFactory="androidx"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppVinculacion.NoActionBar"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".MenuRegistros"></activity>
+        <activity android:name=".SimpleSpinnerPersonasActivity"></activity>
+        <activity android:name=".Name3" />
+        <activity android:name=".MainActivity3" />
+        <activity android:name=".Name1" />
+        <activity android:name=".MainActivity1" />
+        <activity android:name=".MenuRegistros" />
         <activity android:name=".MainActivity2" />
         <activity android:name=".MiEncuesta2" />
         <activity android:name=".MiEncuesta" />
