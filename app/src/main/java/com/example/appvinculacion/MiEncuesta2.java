@@ -84,10 +84,6 @@ public class MiEncuesta2 extends AppCompatActivity implements View.OnClickListen
     MyDbHelper conn;
 
 
-
-
-
-
     private static final String CERO = "0";
     private static final String DOS_PUNTOS = ":";
     //Calendario para obtener fecha & hora
